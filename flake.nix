@@ -75,8 +75,8 @@
         ({stdenv,cc}: pkgs.wrapNonDeterministicGcc stdenv cc) 
         { stdenv=pkgs.stdenv; cc = pkgs.stdenv.cc; };
 
-      # stdenv = pkgs.overrideCC pkgs.stdenv (pkgs.ccacheWrapper.override { inherit cc; });
-      stdenv = pkgs.overrideCC pkgs.stdenv cc;
+      stdenv = pkgs.overrideCC pkgs.stdenv (pkgs.ccacheWrapper.override { inherit cc; });
+      # stdenv = pkgs.overrideCC pkgs.stdenv cc;
         # cc = pkgs.fastStdenv.cc;
       # stdenv = pkgs.overrideCC pkgs.stdenv (pkgs.ccache.links {
       #   extraConfig = '' 
