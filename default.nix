@@ -328,7 +328,6 @@ stdenv.mkDerivation rec {
     export SSL_CERT_FILE
     env | grep CCACHE
     ls -la /var/cache/ccache
-    export CCACHE_DIR=/var/cache/ccache
     # exit
 
     sed -e '/^install:/s@[^ ]*/doc/[^ ]*@@' -i Makefile
