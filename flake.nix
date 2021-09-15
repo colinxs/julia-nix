@@ -56,7 +56,8 @@
         # stdenv = pkgs.overrideCC pkgs.stdenv pkgs.ccacheWrapper;
       }; 
     in {
-      packages.x86_64-linux.julia = callPackage ./default.nix args;
+      # packages.x86_64-linux.julia = callPackage ./default.nix args;
+      packages.x86_64-linux.julia = pkgs.hello.override { stdenv = pkgs.ccacheStdenv; }; 
       # packages.x86_64-linux.julia = pkgs.callPackage ./default-simple.nix args; 
     };
 }
