@@ -237,6 +237,7 @@ stdenv.mkDerivation rec {
         sed -ri 's/\s+\-j\s*[0-9]+//g' "$f" && echo "Modified $f" 
       fi
     done
+    ls -la deps/srccache | grep Suite
     sed -ri 's/make \-\-jobs/$(MAKE) --jobs/g' deps/srccache/SuiteSparse-5.4.0/metis-5.1.0/Makefile
     shopt -u globstar
     set +e
