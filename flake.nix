@@ -65,43 +65,22 @@
       };
       callPackage = pkgs.lib.callPackageWith (pkgs // { stdenv = pkgs.ccacheStdenv; });
       pkgsHome = nix-home.legacyPackages.x86_64-linux;
-      # stdenv = pkgs.fastStdenv;
-      # stdenv = pkgs.overrideCC pkgs.ccacheStdenv pkgs.fastStdenv.cc;
-      # stdenv = pkgs.ccacheStdenv;
-
-      # stdenv = pkgs.stdenv;
-
-      # cc = lib.makeOverridable ({stdenv,cc}: pkgs.wrapNonDeterministicGcc stdenv cc) { stdenv=pkgs.stdenv; cc = pkgs.stdenv.cc; }
-
-      # cc = pkgs.gcc10.overrideAttrs (oA: { 
-      #   cc = pkgs.ccache.links {
-      #     unwrappedCC = (oA.cc.override { reproducibleBuild = false; profiledCompiler = true; }).cc;
-      #     extraConfig = "SWAG";
-      #   };
-      # })
       
-      fastCCWrapper = pkgs.gcc10.overrideAttrs (oA: { cc = (oA.cc.override { reproducibleBuild = false; profiledCompiler = true; }); });
-      ccacheCC = pkgs.ccache.links { extraConfig = ""; unwrappedCC = fastCCWrapper.cc; };
+      # fastCCWrapper = pkgs.gcc10.overrideAttrs (oA: { cc = (oA.cc.override { reproducibleBuild = false; profiledCompiler = true; }); })
+      ccacheCC = pkgs.ccache.links { 
+        # unwrappedCC = fastCCWrapper.cc;
+        unwrappedCC = pkgs.fastStdenv.cc.cc;
+        extraConfig = ''
+          export CCACHE_COMPRESS=1
+          export CCACHE_DIR=/var/cache/ccache
+          export CCACHE_UMASK=007
+        '';
+      };
       stdenv = pkgs.overrideCC pkgs.stdenv (pkgs.wrapCC ccacheCC);
 
-      # stdenv = pkgs.overrideCC pkgs.stdenv cc;
-        # cc = pkgs.fastStdenv.cc;
-      # stdenv = pkgs.overrideCC pkgs.stdenv (pkgs.ccache.links {
-      #   extraConfig = '' 
-      #     export CCACHE_COMPRESS=1
-      #     export CCACHE_DIR=/var/cache/ccache
-      #     export CCACHE_UMASK=007
-      #   '';
-      #   # unwrappedCC = pkgs.fastStdenv.cc.cc;
-      #   unwrappedCC = pkgs.stdenv.cc.cc;
-      # });
-
-      # stdenv = pkgs.ccacheStdenv;
       args = {
+        inherit stdenv;
         inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices;
-        # stdenv = pkgs.ccacheStdenv;
-        # stdenv = pkgs.ccacheWrapper;
-        # stdenv = pkgs.overrideCC pkgs.stdenv pkgs.ccacheWrapper;
       };
     in
     {
