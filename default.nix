@@ -59,7 +59,7 @@ let
   julia = (pkgs.callPackage ./NixManifest.nix { inherit pkgs; }).julia;
   src = julia.meta.assets."julia-${julia.version}-full.tar.gz";
 
-  toPretty = generators.toPretty {
+  toPretty = generators.toPretty {};
   makeDep = { use ? true, deps ? [ ], flags ? [ ], ldLibraryPath ? true }: {
     inherit use deps flags ldLibraryPath;
   };
