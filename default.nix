@@ -216,7 +216,7 @@ let
     }
   ];
 in
-pkgs.ccacheStdenv.mkDerivation rec {
+stdenv.mkDerivation rec {
   inherit (julia) pname version;
   inherit src;
 
@@ -326,6 +326,8 @@ pkgs.ccacheStdenv.mkDerivation rec {
   preBuild = ''
     export LD_LIBRARY_PATH
     export SSL_CERT_FILE
+    env
+    exit
 
     sed -e '/^install:/s@[^ ]*/doc/[^ ]*@@' -i Makefile
     sed -e '/[$](DESTDIR)[$](docdir)/d' -i Makefile
