@@ -12,86 +12,30 @@
   outputs = { self, nixpkgs, nix-home, ... }:
     let
       system = "x86_64-linux";
-      inherit (pkgs) lib;
-      pkgs = import nixpkgs {
-        inherit system;
-        # config = {
-        #   replaceStdenv = { pkgs }: pkgs.ccacheStdenv;
-        # };
-        # overlays = [
-        #   (final: prev: {
-        #     ccacheWrapper = prev.ccacheWrapper.override {
-        #       cc = cc;
-        #       # cc = final.buildPackages.gcc8;
-        #       # cc = prev.gcc9Stdenv.cc;
-        #       # cc = prev.fastStdenv.cc;
-        #       # cc = prev.buildPackages.gcc10.overrideAttrs (oA: {
-        #       #   cc = oA.cc.override {
-        #       #     reproducibleBuild = false;
-        #       #     profiledCompiler = true; 
-        #       #   };
-        #       # });
-        #
-        #       # cc = prev.buildPackages.gcc10.overrideAttrs (old: {
-        #       #   cc = old.cc.override {
-        #       #     reproducibleBuild = false;
-        #       #     profiledCompiler = with stdenv; (!isDarwin && (isi686 || isx86_64));
-        #       #   };
-        #       # });
-        #       extraConfig = ''
-        #         export CCACHE_COMPRESS=1
-        #         export CCACHE_DIR=/var/cache/ccache
-        #         export CCACHE_UMASK=007
-        #         if [ ! -d "$CCACHE_DIR" ]; then
-        #           echo "====="
-        #           echo "Directory '$CCACHE_DIR' does not exist"
-        #           echo "Please create it with:"
-        #           echo "  sudo mkdir -m0770 '$CCACHE_DIR'"
-        #           echo "  sudo chown root:nixbld '$CCACHE_DIR'"
-        #           echo "====="
-        #           exit 1
-        #         fi
-        #         if [ ! -w "$CCACHE_DIR" ]; then
-        #           echo "====="
-        #           echo "Directory '$CCACHE_DIR' is not accessible for user $(whoami)"
-        #           echo "Please verify its access permissions"
-        #           echo "====="
-        #           exit 1
-        #      /nix/store/qjixqv5pzih3hk5hrif37gl7jkqvmnlw-ccache-links/bin/gcc   fi
-        #       '';
-        #     };
-        #   })
-        # ];
-      };
-      callPackage = pkgs.lib.callPackageWith (pkgs // { stdenv = pkgs.ccacheStdenv; });
-      pkgsHome = nix-home.legacyPackages.x86_64-linux;
+
+      pkgsHome = nix-home.legacyPackages."${system}";
       
-      # fastCCWrapper = pkgs.gcc10.overrideAttrs (oA: { cc = (oA.cc.override { reproducibleBuild = false; profiledCompiler = true; }); })
-      ccacheCC = pkgs.ccache.links { 
-        # unwrappedCC = fastCCWrapper.cc;
+      pkgs = nixpkgs.legacyPackages."${system}";
+      inherit (pkgs) lib;
+      
+      ccacheCC = pkgs.wrapCC (pkgs.ccache.links { 
+        # unwrappedCC = pkgs.gcc10.overrideAttrs (oA: { cc = (oA.cc.override { reproducibleBuild = false; profiledCompiler = true; }); })
         unwrappedCC = pkgs.fastStdenv.cc.cc;
         extraConfig = ''
           export CCACHE_COMPRESS=1
           export CCACHE_DIR=/var/cache/ccache
           export CCACHE_UMASK=007
         '';
-      };
-      stdenv = pkgs.overrideCC pkgs.stdenv (pkgs.wrapCC ccacheCC);
+      });
 
-      args = {
-        inherit stdenv;
-        inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices;
-      };
+      stdenv = pkgs.overrideCC pkgs.stdenv ccacheCC;
+
+      callPackage = lib.callPackageWith (pkgs // { stdenv = pkgs.ccacheStdenv; });
     in
     {
-      # packages.x86_64-linux.julia = callPackage ./default.nix args;
-      packages.x86_64-linux.julia = (pkgs.hello.override { inherit stdenv; }).overrideDerivation (oA: rec {
-        configurePhase = ''
-          echo "$(command -v gcc)"
-
-          exit 1
-        '';
-      });
+      packages.x86_64-linux.julia = callPackage ./default.nix {
+        inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices;
+      };
 
       # packages.x86_64-linux.julia = pkgs.callPackage ./default-simple.nix args; 
     };
