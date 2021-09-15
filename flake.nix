@@ -65,7 +65,7 @@
       callPackage = pkgs.lib.callPackageWith (pkgs // { stdenv = pkgs.ccacheStdenv; });
       stdenv = pkgs.ccacheStdenv;
       # cc = pkgs.gcc9;
-      cc = pkgs.gcc10.overrideAttrs (oA: {
+      cc = pkgs.gcc9.overrideAttrs (oA: {
         cc =  oA.cc.override {
           reproducibleBuild = false;
           profiledCompiler = true; 
