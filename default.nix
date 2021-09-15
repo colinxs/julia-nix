@@ -235,6 +235,7 @@ stdenv.mkDerivation rec {
       # fi
     done
     echo "HERE1"
+    set +x
     shopt -u globstar
     echo "HERE2"
     rg '\--jobs\s*=\s*' -g 'Makefile'
@@ -245,6 +246,7 @@ stdenv.mkDerivation rec {
     rg '\-j\s*' -g '*.mk'
     echo "HERE5"
     echo "done" 
+    set -x
     exit
   '';
 
