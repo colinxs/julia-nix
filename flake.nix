@@ -66,7 +66,7 @@
     in
     {
       # packages.x86_64-linux.julia = callPackage ./default.nix args;
-      packages.x86_64-linux.julia = (pkgs.hello.overrideAttrs (oA: { 
+      packages.x86_64-linux.julia = (pkgs.hello.overrideAttrs (oA: oA // { 
         # buildInputs = (oA.buildInputs or []) ++ [ pkgs.which ];
         preBuild = ''
           echo "$(${pkgs.which}/bin/which gcc)"
