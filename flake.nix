@@ -66,13 +66,15 @@
     in
     {
       # packages.x86_64-linux.julia = callPackage ./default.nix args;
-      packages.x86_64-linux.julia = pkgs.hello.overrideAttrs (oA: { 
-        inherit stdenv; 
+      packages.x86_64-linux.julia = (pkgs.hello.overrideAttrs (oA: { 
         buildInputs = (oA.buildInputs or []) ++ [ pkgs.which ];
         preBuild = ''
           echo "$(which gcc)"
         '';
+      }).override {
+        inherit stdenv; 
       });
+        
       # packages.x86_64-linux.julia = pkgs.callPackage ./default-simple.nix args; 
     };
 }
