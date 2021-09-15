@@ -27,7 +27,7 @@
           };
         }) {
           extraConfig = "";
-          inherit (stdenv) cc;
+          inherit (pkgs.stdenv) cc;
         };
       stdenv = pkgs.overrideCC pkgs.stdenv (ccacheWrapper.override { inherit cc; }); 
       pkgs = import nixpkgs {
