@@ -58,7 +58,7 @@ stdenv.mkDerivation rec {
     patchShebangs . contrib
   '';
 
-  # dontUseCmakeConfigure = true;
+  dontUseCmakeConfigure = true;
 
   # buildInputs = [
   #   arpack
