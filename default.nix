@@ -62,16 +62,16 @@ let
   # TODO
   toPretty = generators.toPretty {};
 
-  makeDep = { use ? true, deps ? [ ], flags ? [ ], ldLibraryPath ? true }: {
+  makeDep = { use ? true, buildInputs ? [ ], makeFlags ? [ ], ldLibraryPath ? true }: {
     inherit use deps flags ldLibraryPath;
   };
 
   parseDeps = deps:
     let
       deps' = map makeDep deps;
-      buildInputs = flatten (map (dep: dep.deps) deps');
+      buildInputs = flatten (map (dep: dep.buildInputs) deps');
       LD_LIBRARY_PATH = makeLibraryPath (flatten (map (dep: dep.buildInputs) (filter (dep: dep.ldLibraryPath) deps')));
-      makeFlags = flatten (map (dep: dep.flags) deps');
+      makeFlags = flatten (map (dep: dep.makeFlags) deps');
     in
     builtins.trace
       (toPretty {
@@ -89,23 +89,23 @@ let
     #   flags=["USE_SYSTEM_LLVM=1"];
     # }
     {
-      deps = [ libunwind ];
-      flags = [
+      buildInputs = [ libunwind ];
+      makeFlags = [
         "USE_SYSTEM_LIBUNWIND=1"
         # "DISABLE_LIBUNWIND=0"
       ];
     }
     {
-      deps = [ pcre2.dev ];
-      flags = [
+      buildInputs = [ pcre2.dev ];
+      makeFlags = [
         "USE_SYSTEM_PCRE=1"
         "PCRE_CONFIG=${pcre2.dev}/bin/pcre2-config"
         "PCRE_INCL_PATH=${pcre2.dev}/include/pcre2.h"
       ];
     }
     {
-      deps = [ openlibm ];
-      flags = [
+      buildInputs = [ openlibm ];
+      makeFlags = [
         "USE_SYSTEM_OPENLIBM=1"
         # "USE_SYSTEM_LIBM=0"
         # "UNTRUSTED_SYSTEM_LIBM=0"
@@ -116,23 +116,23 @@ let
     # }
     {
       use = !stdenv.isDarwin;
-      deps = [ blas ];
-      # deps = [ openblas ];
-      flags = [
+      buildInputs = [ blas ];
+      # buildInputs = [ openblas ];
+      makeFlags = [
         "USE_SYSTEM_BLAS=1"
         "USE_BLAS64=${if blas.isILP64 then "1" else "0"}"
       ];
     }
     {
-      deps = [ lapack ];
-      flags = [ "USE_SYSTEM_LAPACK=1" ];
+      buildInputs = [ lapack ];
+      makeFlags = [ "USE_SYSTEM_LAPACK=1" ];
     }
     # {
     #   flags=["USE_SYSTEM_GMP=1"];
     # }
     {
-      deps = [ mpfr ];
-      flags = [ "USE_SYSTEM_MPFR=1" ];
+      buildInputs = [ mpfr ];
+      makeFlags = [ "USE_SYSTEM_MPFR=1" ];
     }
     # {
     #   flags=["USE_SYSTEM_SUITESPARSE=1"];
@@ -141,8 +141,8 @@ let
     #   flags=["USE_SYSTEM_LIBUV=1"];
     # }
     {
-      deps = [ utf8proc ];
-      flags = [ "USE_SYSTEM_UTF8PROC=1" ];
+      buildInputs = [ utf8proc ];
+      makeFlags = [ "USE_SYSTEM_UTF8PROC=1" ];
     }
     # {
     #   flags=["USE_SYSTEM_MBEDTLS=1"];
@@ -151,24 +151,24 @@ let
     #   flags=["USE_SYSTEM_LIBSSH2=1"];
     # }
     # {
-    #   deps = [ libnghttp2.lib ];
+    #   buildInputs = [ libnghttp2.lib ];
     #   flags=["USE_SYSTEM_NGHTTP2=1"];
     # }
     # {
-    #   deps = [ curl ];
+    #   buildInputs = [ curl ];
     #   flags=["USE_SYSTEM_CURL=1"];
     # }
     {
-      deps = [ libgit2 ];
-      flags = [ "USE_SYSTEM_LIBGIT2=1" ];
+      buildInputs = [ libgit2 ];
+      makeFlags = [ "USE_SYSTEM_LIBGIT2=1" ];
     }
     {
-      deps = patchelf;
-      flags = [ "USE_SYSTEM_PATCHELF=1" ];
+      buildInputs = patchelf;
+      makeFlags = [ "USE_SYSTEM_PATCHELF=1" ];
     }
     {
-      deps = zlib;
-      flags = [ "USE_SYSTEM_ZLIB=1" ];
+      buildInputs = zlib;
+      makeFlags = [ "USE_SYSTEM_ZLIB=1" ];
     }
     # {
     #   flags=["USE_SYSTEM_P7ZIP=1"];
