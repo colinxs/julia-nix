@@ -65,7 +65,7 @@
       # stdenv = pkgs.ccacheStdenv;
       stdenv = with pkgs; overrideCC pkgs.stdenv (ccacheWrapper.override { 
         # cc = (wrapNonDeterministicGcc pkgs.stdenv gcc10);
-        cc = gcc9.override {
+        cc = buildPackages.gcc9.override {
           reproducibleBuild = false;
           profiledCompiler = true; 
         };
