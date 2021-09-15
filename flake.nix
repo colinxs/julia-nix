@@ -12,25 +12,6 @@
   outputs = { self, nixpkgs, nix-home, ... }:
     let
       system = "x86_64-linux";
-      # cc = pkgs.fastStdenv.cc;
-      # cc = pkgs.gcc9;
-      cc = pkgs.gcc9.overrideAttrs (oA: {
-        cc =  oA.cc.override {
-          reproducibleBuild = false;
-          profiledCompiler = true; 
-        };
-      });
-      # ccacheWrapper = pkgs.makeOverridable ({ extraConfig, cc }:
-      #   cc.override {
-      #     cc = pkgs.ccache.links {
-      #       inherit extraConfig;
-      #       unwrappedCC = cc.cc;
-      #     };
-      #   }) {
-      #     extraConfig = "";
-      #     inherit (pkgs.stdenv) cc;
-      #   };
-      stdenv = pkgs.overrideCC pkgs.stdenv (pkgs.ccacheWrapper.override { inherit cc; }); 
       pkgs = import nixpkgs {
         inherit system;
         # config = {
@@ -83,6 +64,7 @@
       };
       callPackage = pkgs.lib.callPackageWith (pkgs // { stdenv = pkgs.ccacheStdenv; });
       pkgsHome = nix-home.legacyPackages.x86_64-linux;
+      stdenv = pkgs.fastStdenv;
       args = {
         inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices;
         # stdenv = pkgs.ccacheStdenv;
