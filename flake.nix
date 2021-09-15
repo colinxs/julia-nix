@@ -63,7 +63,8 @@
       };
       callPackage = pkgs.lib.callPackageWith (pkgs // { stdenv = pkgs.ccacheStdenv; });
       # stdenv = pkgs.ccacheStdenv;
-      stdenv = with pkgs; overrideCC ccacheStdenv (wrapNonDeterminsticGcc ccacheStdenv buildPackages.gcc10);
+      # stdenv = with pkgs; overrideCC ccacheStdenv (wrapNonDeterminsticGcc ccacheStdenv buildPackages.gcc10);
+      stdenv = with pkgs; overrideCC ccacheStdenv fastStdenv.cc; 
       # stdenv = with pkgs; overrideCC (ccacheWrapper.override {
       #   # cc = fastStdenv.cc;
       #   # cc = (wrapNonDeterministicGcc pkgs.stdenv buildPackages.gcc10);
