@@ -44,17 +44,6 @@ with lib;
 # https://github.com/JuliaLang/julia/blob/master/doc/build/distributing.md
 # https://github.com/JuliaLang/julia/blob/master/doc/build/linux.md
 
-# Patched deps (see ./deps/patches in Julia repo)
-# - gmp
-# - libgit2
-# - libunwind
-# - llvm
-# - mbedtls
-# - openblas
-# - p7zip
-# - pcre2
-# - SuiteSparse
-
 let
   julia = (pkgs.callPackage ./NixManifest.nix { inherit pkgs; }).julia;
   src = julia.meta.assets."julia-${julia.version}-full.tar.gz";
@@ -94,6 +83,16 @@ let
       })
       { inherit buildInputs LD_LIBRARY_PATH makeFlags; };
 
+  # Patched deps (see ./deps/patches in Julia repo)
+  # - gmp
+  # - libgit2
+  # - libunwind
+  # - llvm
+  # - mbedtls
+  # - openblas
+  # - p7zip
+  # - pcre2
+  # - SuiteSparse
   deps = parseDeps [
     # {
     #   flags=["USE_SYSTEM_CSL=1"];
@@ -119,7 +118,7 @@ let
       ];
     }
     {
-      use = true;
+      use = checkVersion openlibm.version "0.7"; 
       buildInputs = [ openlibm ];
       makeFlags = [
         "USE_SYSTEM_OPENLIBM=1"
