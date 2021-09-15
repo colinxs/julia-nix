@@ -49,7 +49,8 @@
       pkgsHome = nix-home.legacyPackages.x86_64-linux; 
       args = { 
         inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices; 
-        stdenv = pkgs.ccacheStdenv;
+        # stdenv = pkgs.ccacheStdenv;
+        stdenv = pkgs.ccacheWrapper;
       }; 
     in {
       packages.x86_64-linux.julia = pkgs.callPackage ./default.nix args;
