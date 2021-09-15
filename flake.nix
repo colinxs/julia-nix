@@ -21,12 +21,12 @@
           (final: prev: {
             ccacheWrapper = prev.ccacheWrapper.override {
               # cc = prev.fastStdenv.cc;
-              # cc = prev.buildPackages.gcc10.overrideAttrs (oA: {
-              #   cc = oA.cc.override {
-              #     reproducibleBuild = false;
-              #     profiledCompiler = true; 
-              #   };
-              # });
+              cc = prev.buildPackages.gcc10.overrideAttrs (oA: {
+                cc = oA.cc.override {
+                  reproducibleBuild = false;
+                  profiledCompiler = true; 
+                };
+              });
                 
               # cc = prev.buildPackages.gcc10.overrideAttrs (old: {
               #   cc = old.cc.override {
