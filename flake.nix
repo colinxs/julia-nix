@@ -54,6 +54,8 @@
         # stdenv = pkgs.ccacheStdenv;
         # stdenv = pkgs.ccacheWrapper;
         # stdenv = pkgs.overrideCC pkgs.stdenv pkgs.ccacheWrapper;
+        stdenv = with pkgs; overrideCC gccStdenv (wrapNonDeterministicGcc gccStdenv ccacheWrapper); 
+
       }; 
     in {
       # packages.x86_64-linux.julia = callPackage ./default.nix args;
