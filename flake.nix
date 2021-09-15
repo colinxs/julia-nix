@@ -26,10 +26,6 @@
                   profiledCompiler = with stdenv; (!isDarwin && (isi686 || isx86_64));
                 };
               });
-              cc = prev.buildPackages.gcc10.override {
-                reproducibleBuild = false;
-                profiledCompiler = with prev.stdenv; (!isDarwin && (isi686 || isx86_64));
-              };
               extraConfig = ''
                 export CCACHE_COMPRESS=1
                 export CCACHE_DIR=/var/cache/ccache
