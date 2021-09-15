@@ -15,7 +15,7 @@
       pkgs = import nixpkgs {
         inherit system;
         config = {
-          replaceStdenv = { pkgs }: builtins.trace "HERE" pkgs.ccacheStdenv;
+          replaceStdenv = { pkgs }: pkgs.ccacheStdenv;
         };
         overlays = [
           (final: prev: {
