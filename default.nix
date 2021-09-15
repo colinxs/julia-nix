@@ -72,7 +72,8 @@ let
     in
     builtins.trace
       (generators.toPretty { } {
-        inherit LD_LIBRARY_PATH makeFlags;
+        # inherit LD_LIBRARY_PATH;
+        # inherit makeFlags;
         buildInputs = map (x: x.name) buildInputs;
       })
       { inherit buildInputs LD_LIBRARY_PATH makeFlags; };
