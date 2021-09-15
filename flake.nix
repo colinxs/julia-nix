@@ -75,7 +75,7 @@
         { inherit (pkgs.stdenv) cc; }
       );
 
-      stdenv = pkgs.overrideCC pkgs.stdenv (ccacheWrapper.override { inherit cc; });
+      stdenv = pkgs.overrideCC pkgs.stdenv (pkgs.ccacheWrapper.override { inherit cc; });
         # cc = pkgs.fastStdenv.cc;
       # stdenv = pkgs.overrideCC pkgs.stdenv (pkgs.ccache.links {
       #   extraConfig = '' 
