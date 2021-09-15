@@ -24,6 +24,7 @@
                 export CCACHE_COMPRESS=1
                 export CCACHE_DIR=/var/cache/ccache
                 export CCACHE_UMASK=007
+                exit 1
                 # if [ ! -d "$CCACHE_DIR" ]; then
                 #   echo "====="
                 #   echo "Directory '$CCACHE_DIR' does not exist"
