@@ -232,6 +232,7 @@ stdenv.mkDerivation rec {
   '';
 
   postPatch = ''
+    exit
     patchShebangs . contrib
     shopt -s globstar
     # for f in ./deps/**/Makefile ./deps/**/*.mk; do
@@ -251,7 +252,7 @@ stdenv.mkDerivation rec {
     rg '\-j\s*[0-9]+' 
     set -e
     echo "DONE"
-    exit
+    # exit
   '';
 
   dontUseCmakeConfigure = true;
