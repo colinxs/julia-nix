@@ -69,6 +69,7 @@
       packages.x86_64-linux.julia = (pkgs.hello.override { inherit stdenv; }).overrideAttrs (oA: {
         preBuild = ''
           echo "YO"
+          exit 1
         '';
       });
         
