@@ -65,7 +65,13 @@
       # stdenv = pkgs.ccacheStdenv;
       stdenv = with pkgs; overrideCC pkgs.stdenv (ccacheWrapper.override {
         # cc = fastStdenv.cc;
-        cc = (wrapNonDeterministicGcc pkgs.stdenv buildPackages.gcc10);
+        # cc = (wrapNonDeterministicGcc pkgs.stdenv buildPackages.gcc10);
+        cc = prev.buildPackages.gcc10.overrideAttrs (oA: {
+          cc = oA.cc.override {
+            reproducibleBuild = false;
+            profiledCompiler = true; 
+          };
+        });
       });
       # pkgs = nixpkgs.legacyPackages.x86_64-linux;
       pkgsHome = nix-home.legacyPackages.x86_64-linux;
