@@ -220,25 +220,7 @@
       "inputs": {
         "flake-compat": "flake-compat",
         "nix-home": "nix-home",
-        "nixpkgs": "nixpkgs_2",
-        "src": "src"
-      }
-    },
-    "src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1626277001,
-        "narHash": "sha256-3cLAv2QZch8VxcSPDsqZ3mMcEbkak+kadjMA1maa2OA=",
-        "owner": "julialang",
-        "repo": "julia",
-        "rev": "1b93d53fc4bb59350ada898038ed4de2994cce33",
-        "type": "github"
-      },
-      "original": {
-        "owner": "julialang",
-        "ref": "v1.6.2",
-        "repo": "julia",
-        "type": "github"
+        "nixpkgs": "nixpkgs_2"
       }
     }
   },
