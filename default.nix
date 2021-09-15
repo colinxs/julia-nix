@@ -246,7 +246,7 @@ stdenv.mkDerivation rec {
   enableParallelBuilding = true;
   
   # TODO
-  __noChroot = true;
+  # __noChroot = true;
 
   buildInputs = []
     ++ deps.buildInputs # TODO
