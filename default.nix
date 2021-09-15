@@ -278,6 +278,7 @@ pkgs.ccacheStdenv.mkDerivation rec {
     # TODO
     ripgrep
     file
+    cacert
   ];
 
   # See ./Make.inc for full set of flags
