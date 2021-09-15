@@ -19,7 +19,7 @@
           profiledCompiler = true; 
         };
       });
-      ccacheWrapper = makeOverridable ({ extraConfig, cc }:
+      ccacheWrapper = pkgs.makeOverridable ({ extraConfig, cc }:
         cc.override {
           cc = ccache.links {
             inherit extraConfig;
