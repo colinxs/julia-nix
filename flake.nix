@@ -13,7 +13,7 @@
     let
       pkgs = import nixpkgs {
         overlays = [
-          final: prev: {
+          (final: prev: {
             ccacheWrapper = prev.ccacheWrapper.override {
               extraConfig = ''
                 export CCACHE_COMPRESS=1
@@ -37,7 +37,7 @@
                 fi
               '';
             };
-          }
+          })
         ];
       };
       # pkgs = nixpkgs.legacyPackages.x86_64-linux;
