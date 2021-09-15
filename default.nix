@@ -235,9 +235,11 @@ stdenv.mkDerivation rec {
       # fi
     done
     shopt -u globstar
-    rg '\--jobs\s*=\s*'
-    rg '\-j\s*'
-    echo "done"
+    rg '\--jobs\s*=\s*' -g 'Makefile'
+    rg '\--jobs\s*=\s*' -g '*.mk'
+    rg '\-j\s*' -g 'Makefile'
+    rg '\-j\s*' -g '*.mk'
+    echo "done" 
     exit
   '';
 
