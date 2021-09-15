@@ -25,6 +25,7 @@
                 cc = old.cc.override {
                   reproducibleBuild = false;
                   profiledCompiler = true; 
+                };
               });
                 
               # cc = prev.buildPackages.gcc10.overrideAttrs (old: {
