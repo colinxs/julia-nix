@@ -194,7 +194,8 @@ stdenv.mkDerivation rec {
   inherit src;
 
   patches = [
-    ./patches/1.6/0001-reduce-precompile-failure-severity-to-a-warning-3990.patch
+    # ./patches/1.6/0001-reduce-precompile-failure-severity-to-a-warning-3990.patch
+    ./patches/1.6/generate_precompile.patch
   ];
 
   # postPatch = ''
