@@ -30,7 +30,7 @@
       #     extraConfig = "";
       #     inherit (pkgs.stdenv) cc;
       #   };
-      stdenv = pkgs.overrideCC pkgs.stdenv (ccacheWrapper.override { inherit cc; }); 
+      stdenv = pkgs.overrideCC pkgs.stdenv (pkgs.ccacheWrapper.override { inherit cc; }); 
       pkgs = import nixpkgs {
         inherit system;
         # config = {
