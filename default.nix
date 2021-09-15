@@ -198,7 +198,16 @@ let
     # }
   ];
 in
-stdenv.mkDerivation rec {
+builtins.trace ''
+  ${toString (checkVersion "1.2.3" "1")}
+  ${toString (checkVersion "1.2.3" "1.2")}
+  ${toString (checkVersion "1.2.3" "1.2.3")}
+  
+  ${toString (checkVersion "1.2.3" "2")}
+  ${toString (checkVersion "1.2.3" "1.3")}
+  ${toString (checkVersion "1.2.3" "1.2.4")}
+''
+(stdenv.mkDerivation rec {
   inherit (julia) pname version;
   inherit src;
 
@@ -328,4 +337,4 @@ stdenv.mkDerivation rec {
   #   # https://github.com/NixOS/nixpkgs/pull/121114.
   #   broken = true;
   # };
-}
+})
