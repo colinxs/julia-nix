@@ -63,13 +63,13 @@
       };
       callPackage = pkgs.lib.callPackageWith (pkgs // { stdenv = pkgs.ccacheStdenv; });
       # stdenv = pkgs.ccacheStdenv;
-      cc = pkgs.gcc9;
-      # cc = pkgs.buildPackages.gcc9.overrideAttrs (oA: {
-      #   cc =  oA.cc.override {
-      #     reproducibleBuild = false;
-      #     profiledCompiler = true; 
-      #   };
-      # });
+      # cc = pkgs.gcc9;
+      cc = pkgs.gcc9.overrideAttrs (oA: {
+        cc =  oA.cc.override {
+          reproducibleBuild = false;
+          profiledCompiler = true; 
+        };
+      });
       stdenv = with pkgs; overrideCC pkgs.stdenv (ccacheWrapper.override { 
         inherit cc;
         # cc = (wrapNonDeterministicGcc pkgs.stdenv gcc10);
