@@ -31,7 +31,6 @@
   # Darwin frameworks
 , CoreServices
 , ApplicationServices
-, src
 }:
 
 assert (!blas.isILP64) && (!lapack.isILP64);
@@ -39,15 +38,12 @@ assert (!blas.isILP64) && (!lapack.isILP64);
 with lib;
 
 let
-  majorVersion = "1";
-  minorVersion = "6";
-  maintenanceVersion = "2";
-  version = "${majorVersion}.${minorVersion}.${maintenanceVersion}";
+  julia = (pkgs.callPackage ./NixManifest.nix { inherit pkgs; }).julia;
+  src = julia.meta.assets."julia-${julia.version}-full.tar.gz";
 in
 
 stdenv.mkDerivation rec {
-  pname = "julia";
-  inherit version;
+  inherit (julia) pname version;
   inherit src;
 
   patches = [
