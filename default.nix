@@ -1,5 +1,6 @@
 { lib
 , pkgs
+, callPackage
 , stdenv
 , fetchzip
   # build tools
@@ -32,7 +33,6 @@
 , blas
 , openblas
 , lapack
-, arpack
   # Darwin frameworks
 , CoreServices
 , ApplicationServices
@@ -48,7 +48,7 @@ with lib;
 # https://github.com/JuliaLang/julia/blob/master/doc/build/linux.md
 
 let
-  julia = (pkgs.callPackage ./NixManifest.nix { inherit pkgs; }).julia;
+  julia = (callPackage ./NixManifest.nix { }).julia;
   src = julia.meta.assets."julia-${julia.version}-full.tar.gz";
 
   checkVersion = x: y:
