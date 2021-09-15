@@ -60,7 +60,9 @@ let
   src = julia.meta.assets."julia-${julia.version}-full.tar.gz";
 
   # TODO
-  toPretty = generators.toPretty {};
+  toPretty = x:
+    let f = generators.toPretty {};
+    in if isString x then x else toPretty x;
 
   makeDep = { use ? true, buildInputs ? [ ], makeFlags ? [ ], ldLibraryPath ? true }: {
     inherit use buildInputs makeFlags ldLibraryPath;
@@ -190,12 +192,11 @@ stdenv.mkDerivation rec {
   inherit src;
 
   patches = [
-    # ./patches/1.5/use-system-utf8proc-julia-1.3.patch
   ];
 
-  postPatch = ''
-    patchShebangs . contrib
-  '';
+  # postPatch = ''
+  #   patchShebangs . contrib
+  # '';
 
   dontUseCmakeConfigure = true;
 
