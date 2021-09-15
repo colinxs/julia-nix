@@ -26,6 +26,8 @@
 , openspecfun
 , pcre2
 , libnghttp2
+, libssh2
+, p7zip
   # linear algebra
 , blas
 , openblas
@@ -146,12 +148,12 @@ let
       buildInputs = [ openblas ];
       makeFlags = [
         "USE_SYSTEM_BLAS=1"
-        "USE_BLAS64=${if blas.isILP64 then "1" else "0"}"
+        "USE_BLAS64=${if openblas.blas64 then "1" else "0"}"
       ];
     }
 
     {
-      use = true;
+      use = checkVersion lapack "3";
       buildInputs = [ lapack ];
       makeFlags = [ "USE_SYSTEM_LAPACK=1" ];
     }
@@ -159,7 +161,7 @@ let
     #   flags=["USE_SYSTEM_GMP=1"];
     # }
     {
-      use = true;
+      use = checkVersion mpfr "4.1";
       buildInputs = [ mpfr ];
       makeFlags = [ "USE_SYSTEM_MPFR=1" ];
     }
@@ -170,42 +172,48 @@ let
     #   flags=["USE_SYSTEM_LIBUV=1"];
     # }
     {
-      use = true;
+      use = checkVersion utf8proc.version "2.6";
       buildInputs = [ utf8proc ];
       makeFlags = [ "USE_SYSTEM_UTF8PROC=1" ];
     }
     # {
     #   flags=["USE_SYSTEM_MBEDTLS=1"];
     # }
-    # {
-    #   flags=["USE_SYSTEM_LIBSSH2=1"];
-    # }
-    # {
-    #   buildInputs = [ libnghttp2.lib ];
-    #   flags=["USE_SYSTEM_NGHTTP2=1"];
-    # }
-    # {
-    #   buildInputs = [ curl ];
-    #   flags=["USE_SYSTEM_CURL=1"];
-    # }
     {
-      use = false;
-      buildInputs = [ libgit2 ];
-      makeFlags = [ "USE_SYSTEM_LIBGIT2=1" ];
+      use = checkVersion libssh2.version "1.9";
+      buildInputs = [ libssh2 ];
+      flags=["USE_SYSTEM_LIBSSH2=1"];
     }
+    {
+      use = checkVersion libnghttp2.version "1";
+      buildInputs = [ libnghttp2.lib ];
+      flags=["USE_SYSTEM_NGHTTP2=1"];
+    }
+    {
+      use = checkVersion curl.version "7";
+      buildInputs = [ curl ];
+      flags=["USE_SYSTEM_CURL=1"];
+    }
+    # {
+    #   use = false;
+    #   buildInputs = [ libgit2 ];
+    #   makeFlags = [ "USE_SYSTEM_LIBGIT2=1" ];
+    # }
     {
       use = true;
       buildInputs = [ patchelf ];
       makeFlags = [ "USE_SYSTEM_PATCHELF=1" ];
     }
     {
-      use = true;
+      use = checkVersion zlib.version "1.2";
       buildInputs = [ zlib ];
       makeFlags = [ "USE_SYSTEM_ZLIB=1" ];
     }
-    # {
-    #   flags=["USE_SYSTEM_P7ZIP=1"];
-    # }
+    {
+      use = true;
+      buildInputs = [ p7zip ];
+      flags=["USE_SYSTEM_P7ZIP=1"];
+    }
   ];
 in
 stdenv.mkDerivation rec {
