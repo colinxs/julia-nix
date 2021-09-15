@@ -36,7 +36,5 @@
       packages.x86_64-linux.julia = callPackage ./default.nix {
         inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices;
       };
-
-      # packages.x86_64-linux.julia = pkgs.callPackage ./default-simple.nix args; 
     };
 }
