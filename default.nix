@@ -238,7 +238,6 @@ stdenv.mkDerivation rec {
       fi
     done
     ls -la deps/srccache | grep Suite
-    sed -ri 's/make \-\-jobs/$(MAKE) --jobs/g' deps/srccache/SuiteSparse-5.4.0/metis-5.1.0/Makefile
     shopt -u globstar
     set +e
     rg JOBS
@@ -315,7 +314,7 @@ stdenv.mkDerivation rec {
      
       # TODO
       "USE_BINARYBUILDER=1"
-      # "VERBOSE=1"
+      "VERBOSE=1"
       # "JOBS=$NIX_BUILD_CORES"
       # "MAKE_NB_JOBS=$NIX_BUILD_CORES"
       # "-j$NIX_BUILD_CORES"
