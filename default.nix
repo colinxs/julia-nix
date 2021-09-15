@@ -237,19 +237,11 @@ stdenv.mkDerivation rec {
       # fi
     done
     shopt -u globstar
-    # echo "HERE1"
-    # set +e
-    # echo "HERE2"
-    # rg '\--jobs\s*=\s*' -g 'Makefile'
-    # echo "HERE3"
-    # rg '\--jobs\s*=\s*' -g '*.mk'
-    # rg '\-j\s*' -g 'Makefile'
-    # echo "HERE4"
-    # rg '\-j\s*' -g '*.mk'
-    # echo "HERE5"
-    # echo "done" 
-    # set -e
-    # exit
+    set +e
+    rg '\--jobs\s*='
+    rg '\-j\s*[0-9]*' 
+    set -e
+    exit
   '';
 
   dontUseCmakeConfigure = true;
