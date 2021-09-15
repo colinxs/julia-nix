@@ -33,9 +33,9 @@
       callPackage = lib.callPackageWith (pkgs // { stdenv = pkgs.ccacheStdenv; });
     in
     {
-      packages.x86_64-linux.julia = callPackage ./default.nix {
-        inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices;
-      };
-      packages.x86_64-linux.hello = pkgs.hello.override { inherit stdenv; };
+      # packages.x86_64-linux.julia = callPackage ./default.nix {
+      #   inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices;
+      # };
+      packages.x86_64-linux.julia = pkgs.hello.override { inherit stdenv; };
     };
 }
