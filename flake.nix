@@ -14,9 +14,11 @@
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
+        config = {
+          replaceStdenv = { pkgs }: builtins.trace "HERE" pkgs.ccacheStdenv;
+        };
         overlays = [
           (final: prev: {
-            replaceStdenv = { pkgs }: builtins.trace "HERE" pkgs.ccacheStdenv;
             ccacheWrapper = prev.ccacheWrapper.override {
               extraConfig = ''
                 export CCACHE_COMPRESS=1
