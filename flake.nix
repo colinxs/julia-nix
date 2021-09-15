@@ -20,7 +20,7 @@
         overlays = [
           (final: prev: {
             ccacheWrapper = prev.ccacheWrapper.override {
-              stdenv = prev.fastStdenv;
+              cc = prev.fastStdenv.cc;
               # cc = prev.buildPackages.gcc10.overrideAttrs (old: {
               #   cc = old.cc.override {
               #     reproducibleBuild = false;
