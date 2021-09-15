@@ -230,11 +230,11 @@ stdenv.mkDerivation rec {
     shopt -s globstar
     for f in ./deps/**/*; do
       if [ -f "$f" ]; then
-        sed -i 's/--jobs=$(JOBS)//g' $f
+        sed -i 's/--jobs=$(JOBS)//g' "$f" || echo "===== FAILED: $f"
       fi
     done
-    rg '\--jobs'
     shopt -u globstar
+    rg '\--jobs'
   '';
 
   dontUseCmakeConfigure = true;
