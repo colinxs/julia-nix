@@ -1,6 +1,6 @@
 --- ./deps/suitesparse.mk	2021-09-15 02:51:31.052832050 -0600
-+++ ./deps/suitesparse-patched.mk	2021-09-15 03:20:41.159244523 -0600
-@@ -40,6 +40,17 @@
++++ ./deps/suitesparse-patched.mk	2021-09-15 03:21:42.138814419 -0600
+@@ -40,6 +40,15 @@
  	mkdir -p $(dir $@)
  	$(TAR) -C $(dir $@) --strip-components 1 -zxf $<
  	echo 1 > $@
@@ -11,9 +11,7 @@
 +	echo "============= SWAG =================="
 +	echo "============= SWAG =================="
 +	echo "============= SWAG =================="
-+	sed -ri 's/make \-\-jobs/$(MAKE) --jobs/g' "$(dir $@)/metis-5.1.0/Makefile"
-+	cat "$(dir $@)/metis-5.1.0/Makefile"
-+	sed -ri 's/make \-\-jobs/$\(MAKE\) --jobs/g' "$(dir $@)/metis-5.1.0/Makefile"
++	sed -ri 's/make \-\-jobs/$$(MAKE) --jobs/g' "$(dir $@)/metis-5.1.0/Makefile"
 +	cat "$(dir $@)/metis-5.1.0/Makefile"
  
  checksum-suitesparse: $(SRCCACHE)/SuiteSparse-$(SUITESPARSE_VER).tar.gz
