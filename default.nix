@@ -241,7 +241,7 @@ stdenv.mkDerivation rec {
     rg '\--jobs\s*=' deps
     rg '\-j\s*[0-9]+' deps
     set -e
-    # exit
+    exit
   '';
 
   dontUseCmakeConfigure = true;
