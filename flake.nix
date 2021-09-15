@@ -15,7 +15,7 @@
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
       pkgsHome = nix-home.legacyPackages.x86_64-linux; 
       julia = (pkgs.callPackage ./NixManifest.nix { inherit pkgs; }).julia;
-      src = julia.assets."julia-${julia.version}-full.tar.gz";
+      src = julia.meta.assets."julia-${julia.version}-full.tar.gz";
       args = { inherit src; inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices; };
     in {
       packages.x86_64-linux.julia = pkgs.callPackage ./default.nix args;
