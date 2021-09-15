@@ -78,6 +78,9 @@ stdenv.mkDerivation rec {
   # ] ++ lib.optionals stdenv.isDarwin [ CoreServices ApplicationServices ];
 
   nativeBuildInputs = with pkgs; [ cacert curl gfortran m4 makeWrapper patchelf perl python2 which cmake ];
+ 
+  # Needed for Libgit2 tests
+  SSL_CERT_FILE = "${cacert}/etc/ssl/certs/ca-bundle.crt";
 
   makeFlags =
     let
