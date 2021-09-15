@@ -65,7 +65,8 @@
       callPackage = pkgs.lib.callPackageWith (pkgs // { stdenv = pkgs.ccacheStdenv; });
       pkgsHome = nix-home.legacyPackages.x86_64-linux;
       # stdenv = pkgs.fastStdenv;
-      stdenv = pkgs.overrideCC pkgs.ccacheStdenv pkgs.fastStdenv.cc;
+      # stdenv = pkgs.overrideCC pkgs.ccacheStdenv pkgs.fastStdenv.cc;
+      stdenv = ccacheStdenv;
       args = {
         inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices;
         # stdenv = pkgs.ccacheStdenv;
