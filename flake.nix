@@ -20,7 +20,7 @@
         overlays = [
           (final: prev: {
             ccacheWrapper = prev.ccacheWrapper.override {
-              # cc = prev.gcc8;
+              cc = prev.gcc8;
               # cc = prev.gcc9Stdenv.cc;
               # cc = prev.fastStdenv.cc;
               # cc = prev.buildPackages.gcc10.overrideAttrs (oA: {
@@ -62,8 +62,16 @@
         ];
       };
       callPackage = pkgs.lib.callPackageWith (pkgs // { stdenv = pkgs.ccacheStdenv; });
-      # stdenv = pkgs.ccacheStdenv;
-      stdenv = with pkgs; overrideCC ccacheStdenv (wrapNonDeterminsticGcc ccacheStdenv buildPackages.gcc9);
+      stdenv = pkgs.ccacheStdenv;
+      # stdenv = with pkgs; overrideCC ccacheStdenv (wrapNonDeterminsticGcc ccacheStdenv buildPackages.gcc9);
+      # stdenv = (makeOverridable ({ stdenv, ... } @ extraArgs:
+      #   overrideCC stdenv (buildPackages.ccacheWrapper.override ({
+      #     inherit (stdenv) cc;
+      #   } // lib.optionalAttrs (builtins.hasAttr "extraConfig" extraArgs) {
+      #     extraConfig = extraArgs.extraConfig;
+      #   }))) {
+      #     inherit stdenv;
+      #   };
       # stdenv = with pkgs; overrideCC ccacheStdenv fastStdenv.cc; 
       # stdenv = with pkgs; overrideCC (ccacheWrapper.override {
       #   # cc = fastStdenv.cc;
