@@ -7,8 +7,9 @@
   outputs = { self, nixpkgs, src }: 
     let
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
+      args = { inherit src; inherit (darwin.apple_sdk.frameworks) ApplicationServices CoreServices; };
     in {
-      # packages.x86_64-linux.julia = pkgs.callPackage ./default.nix { inherit src; }; 
-      packages.x86_64-linux.julia = pkgs.callPackage ./default-simple.nix { inherit src; }; 
+      # packages.x86_64-linux.julia = pkgs.callPackage ./default.nix args;
+      packages.x86_64-linux.julia = pkgs.callPackage ./default-simple.nix args; 
     };
 }
