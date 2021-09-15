@@ -14,9 +14,9 @@
       system = "x86_64-linux";
       pkgs = import nixpkgs {
         inherit system;
-        config = {
-          replaceStdenv = { pkgs }: pkgs.ccacheStdenv;
-        };
+        # config = {
+        #   replaceStdenv = { pkgs }: pkgs.ccacheStdenv;
+        # };
         overlays = [
           (final: prev: {
             ccacheWrapper = prev.ccacheWrapper.override {
@@ -47,7 +47,10 @@
       };
       # pkgs = nixpkgs.legacyPackages.x86_64-linux;
       pkgsHome = nix-home.legacyPackages.x86_64-linux; 
-      args = { inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices; }; 
+      args = { 
+        inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices; 
+        stdenv = pkgs.ccacheStdenv;
+      }; 
     in {
       packages.x86_64-linux.julia = pkgs.callPackage ./default.nix args;
       # packages.x86_64-linux.julia = pkgs.callPackage ./default-simple.nix args; 
