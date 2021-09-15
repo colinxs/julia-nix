@@ -182,7 +182,7 @@ let
     {
       use = checkVersion libssh2.version "1.9";
       buildInputs = [ libssh2 ];
-      flags=["USE_SYSTEM_LIBSSH2=1"];
+      makeFlags=["USE_SYSTEM_LIBSSH2=1"];
     }
     {
       use = checkVersion libnghttp2.version "1";
