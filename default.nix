@@ -70,7 +70,7 @@ let
     let
       deps' = map makeDep deps;
       buildInputs = flatten (map (dep: dep.deps) deps');
-      LD_LIBRARY_PATH = makeLibraryPath (filter (dep: dep.ldLibraryPath) deps');
+      LD_LIBRARY_PATH = makeLibraryPath (flatten (map (dep: dep.buildInputs) (filter (dep: dep.ldLibraryPath) deps')));
       makeFlags = flatten (map (dep: dep.flags) deps');
     in
     builtins.trace
