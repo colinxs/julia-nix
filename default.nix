@@ -226,6 +226,10 @@ stdenv.mkDerivation rec {
     ./patches/1.6/foo.patch
   ];
 
+  prePatch = ''
+    ls -la deps
+  '';
+
   postPatch = ''
     patchShebangs . contrib
     shopt -s globstar
