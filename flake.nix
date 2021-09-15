@@ -63,16 +63,17 @@
       };
       callPackage = pkgs.lib.callPackageWith (pkgs // { stdenv = pkgs.ccacheStdenv; });
       # stdenv = pkgs.ccacheStdenv;
-      stdenv = with pkgs; overrideCC pkgs.stdenv (ccacheWrapper.override {
-        # cc = fastStdenv.cc;
-        # cc = (wrapNonDeterministicGcc pkgs.stdenv buildPackages.gcc10);
-        cc = buildPackages.gcc10.overrideAttrs (oA: {
-          cc = oA.cc.override {
-            reproducibleBuild = false;
-            profiledCompiler = true; 
-          };
-        });
-      });
+      stdenv = with pkgs; overrideCC ccacheStdenv (wrapNonDeterminsticGcc ccacheStdenv buildPackages.gcc10);
+      # stdenv = with pkgs; overrideCC (ccacheWrapper.override {
+      #   # cc = fastStdenv.cc;
+      #   # cc = (wrapNonDeterministicGcc pkgs.stdenv buildPackages.gcc10);
+      #   cc = buildPackages.gcc10.overrideAttrs (oA: {
+      #     cc = oA.cc.override {
+      #       reproducibleBuild = false;
+      #       profiledCompiler = true; 
+      #     };
+      #   });
+      # });
       # pkgs = nixpkgs.legacyPackages.x86_64-linux;
       pkgsHome = nix-home.legacyPackages.x86_64-linux;
       # stdenv = with pkgs; overrideCC gccStdenv (wrapNonDeterministicGcc gccStdenv ccacheWrapper); 
