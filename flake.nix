@@ -72,7 +72,7 @@
           echo "$(which gcc)"
         '';
       })).override {
-        inherit stdenv; 
+        # inherit stdenv; 
       };
         
       # packages.x86_64-linux.julia = pkgs.callPackage ./default-simple.nix args; 
