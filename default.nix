@@ -216,7 +216,7 @@ let
     }
   ];
 in
-stdenv.mkDerivation rec {
+pkgs.ccacheStdenv.mkDerivation rec {
   inherit (julia) pname version;
   inherit src;
 
