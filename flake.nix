@@ -14,6 +14,7 @@
       # pkgs = import nixpkgs { config.allowBroken = true; };
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
       pkgsHome = nix-home.legacyPackages.x86_64-linux; 
+      julia = inherit (pkgs.callPackage ./NixManifest.nix { inherit pkgs; }) julia;
       src = julia.assets."julia-${julia.version}-full.tar.gz";
       args = { inherit src; inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices; };
     in {
