@@ -21,7 +21,7 @@
       });
       ccacheWrapper = pkgs.makeOverridable ({ extraConfig, cc }:
         cc.override {
-          cc = ccache.links {
+          cc = pkgs.ccache.links {
             inherit extraConfig;
             unwrappedCC = cc.cc;
           };
