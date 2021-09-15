@@ -66,7 +66,7 @@
       stdenv = with pkgs; overrideCC pkgs.stdenv (ccacheWrapper.override {
         # cc = fastStdenv.cc;
         # cc = (wrapNonDeterministicGcc pkgs.stdenv buildPackages.gcc10);
-        cc = prev.buildPackages.gcc10.overrideAttrs (oA: {
+        cc = buildPackages.gcc10.overrideAttrs (oA: {
           cc = oA.cc.override {
             reproducibleBuild = false;
             profiledCompiler = true; 
