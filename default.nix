@@ -185,7 +185,7 @@ let
       makeFlags=["USE_SYSTEM_LIBSSH2=1"];
     }
     {
-      use = checkVersion libnghttp2.version "1";
+      use = checkVersion libnghttp2.version "1.41";
       buildInputs = [ libnghttp2.lib ];
       makeFlags=["USE_SYSTEM_NGHTTP2=1"];
     }
