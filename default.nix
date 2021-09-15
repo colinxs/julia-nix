@@ -227,7 +227,7 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    exit
+    # exit
     patchShebangs . contrib
     shopt -s globstar
     # for f in ./deps/**/Makefile ./deps/**/*.mk; do
