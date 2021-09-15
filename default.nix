@@ -59,14 +59,14 @@ stdenv.mkDerivation rec {
 
   buildInputs = [
     arpack
+    blas
+    lapack
     fftw
     fftwSinglePrec
     libgit2
     libunwind
     mpfr
     pcre2.dev
-    blas
-    lapack
     openlibm
     openspecfun
     readline
@@ -126,6 +126,7 @@ stdenv.mkDerivation rec {
     ];
 
   LD_LIBRARY_PATH = makeLibraryPath [
+    curl
     arpack
     fftw
     fftwSinglePrec
