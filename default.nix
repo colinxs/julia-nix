@@ -229,7 +229,7 @@ stdenv.mkDerivation rec {
     patchShebangs . contrib
     shopt -s globstar
     # for f in ./deps/**/Makefile ./deps/**/*.mk; do
-    for f in ./deps/srccache/**/*; do 
+    for f in ./deps/**/*; do 
       # if [ -f "$f" ]; then
         echo "Modifying $f"
         sed -ri 's/\s+\--jobs=\$\(JOBS\)//g' "$f" && echo "Modified $f" 
