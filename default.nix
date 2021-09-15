@@ -192,7 +192,7 @@ let
     {
       use = checkVersion curl.version "7";
       buildInputs = [ curl ];
-      flags=["USE_SYSTEM_CURL=1"];
+      makeFlags=["USE_SYSTEM_CURL=1"];
     }
     # {
     #   use = false;
