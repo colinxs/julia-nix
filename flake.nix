@@ -15,8 +15,7 @@
       pkgsHome = nix-home.legacyPackages.x86_64-linux; 
       args = { inherit src pkgsHome; inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices; };
     in {
-      # packages.x86_64-linux.julia = pkgs.callPackage ./default.nix args;
+      packages.x86_64-linux.julia = pkgs.callPackage ./default.nix args;
       # packages.x86_64-linux.julia = pkgs.callPackage ./default-simple.nix args; 
-      packages.x86_64-linux.chokidar = pkgs.callPackage ./default.nix args;
     };
 }
