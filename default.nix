@@ -264,7 +264,8 @@ stdenv.mkDerivation rec {
 
     configurePhase = ''
       #mkdir ./__build
-      make O=./__build configure
+      #make O=./__build configure
+      make cleanall
     '';
 
   # TODO
