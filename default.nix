@@ -230,6 +230,7 @@ stdenv.mkDerivation rec {
     shopt -s globstar
     for f in ./deps/**/Makefile ./deps/**/*.mk; do
       # if [ -f "$f" ]; then
+        echo "Modifying $f"
         sed -i 's/--jobs=$(JOBS)//g' "$f" || echo "===== FAILED: $f"
       # fi
     done
