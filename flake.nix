@@ -16,6 +16,7 @@
         inherit system;
         overlays = [
           (final: prev: {
+            replaceStdenv = { pkgs }: pkgs.ccacheStdenv;
             ccacheWrapper = prev.ccacheWrapper.override {
               extraConfig = ''
                 export CCACHE_COMPRESS=1
