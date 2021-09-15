@@ -14,7 +14,7 @@
       system = "x86_64-linux";
       # cc = pkgs.gcc9;
       cc = pkgs.buildPackages.gcc9.overrideAttrs (oA: {
-        cc =  oA.override {
+        cc =  oA.cc.cc.override {
           reproducibleBuild = false;
           profiledCompiler = true; 
         };
