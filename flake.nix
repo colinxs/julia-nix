@@ -71,9 +71,10 @@
         preBuild = ''
           echo "$(which gcc)"
         '';
-      })).override {
-        # inherit stdenv; 
-      };
+      }));
+      # })).override {
+      #   # inherit stdenv; 
+      # };
         
       # packages.x86_64-linux.julia = pkgs.callPackage ./default-simple.nix args; 
     };
