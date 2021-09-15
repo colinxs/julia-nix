@@ -219,7 +219,7 @@ stdenv.mkDerivation rec {
 
 
   buildInputs = []
-    # ++ deps.buildInputs # TODO
+    ++ deps.buildInputs # TODO
     ++ lib.optionals stdenv.isDarwin [
     CoreServices
     ApplicationServices
