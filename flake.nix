@@ -56,7 +56,7 @@
         #           echo "Please verify its access permissions"
         #           echo "====="
         #           exit 1
-        #         fi
+        #      /nix/store/qjixqv5pzih3hk5hrif37gl7jkqvmnlw-ccache-links/bin/gcc   fi
         #       '';
         #     };
         #   })
@@ -70,15 +70,18 @@
 
       # stdenv = pkgs.stdenv;
 
-      stdenv = pkgs.overrideCC pkgs.stdenv (pkgs.ccache.links {
-        extraConfig = '' 
-          export CCACHE_COMPRESS=1
-          export CCACHE_DIR=/var/cache/ccache
-          export CCACHE_UMASK=007
-        '';
-        # unwrappedCC = pkgs.fastStdenv.cc.cc;
-        unwrappedCC = pkgs.stdenv.cc.cc;
+      stdenv = pkgs.overrideCC pkgs.stdenv (pkgs.ccacheWrapper.override {
+        cc = pkgs.fastStdenv.cc;
       });
+      # stdenv = pkgs.overrideCC pkgs.stdenv (pkgs.ccache.links {
+      #   extraConfig = '' 
+      #     export CCACHE_COMPRESS=1
+      #     export CCACHE_DIR=/var/cache/ccache
+      #     export CCACHE_UMASK=007
+      #   '';
+      #   # unwrappedCC = pkgs.fastStdenv.cc.cc;
+      #   unwrappedCC = pkgs.stdenv.cc.cc;
+      # });
 
       # stdenv = pkgs.ccacheStdenv;
       args = {
