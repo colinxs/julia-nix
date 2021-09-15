@@ -75,8 +75,8 @@ let
     in
     builtins.trace
       (toPretty {
-        # inherit LD_LIBRARY_PATH;
-        # inherit makeFlags;
+        inherit LD_LIBRARY_PATH;
+        makeFlags = toPretty makeFlags;
         buildInputs = toPretty (map (x: x.name) buildInputs);
       })
       { inherit buildInputs LD_LIBRARY_PATH makeFlags; };
@@ -89,6 +89,7 @@ let
     #   flags=["USE_SYSTEM_LLVM=1"];
     # }
     {
+      use = false;
       buildInputs = [ libunwind ];
       makeFlags = [
         "USE_SYSTEM_LIBUNWIND=1"
@@ -96,6 +97,7 @@ let
       ];
     }
     {
+      use = false;
       buildInputs = [ pcre2.dev ];
       makeFlags = [
         "USE_SYSTEM_PCRE=1"
@@ -104,6 +106,7 @@ let
       ];
     }
     {
+      use = false;
       buildInputs = [ openlibm ];
       makeFlags = [
         "USE_SYSTEM_OPENLIBM=1"
@@ -115,7 +118,8 @@ let
     #   flags=["USE_SYSTEM_DSFMT=1"];
     # }
     {
-      use = !stdenv.isDarwin;
+      use = false;
+      # use = !stdenv.isDarwin;
       buildInputs = [ blas ];
       # buildInputs = [ openblas ];
       makeFlags = [
@@ -124,6 +128,7 @@ let
       ];
     }
     {
+      use = false;
       buildInputs = [ lapack ];
       makeFlags = [ "USE_SYSTEM_LAPACK=1" ];
     }
@@ -131,6 +136,7 @@ let
     #   flags=["USE_SYSTEM_GMP=1"];
     # }
     {
+      use = false;
       buildInputs = [ mpfr ];
       makeFlags = [ "USE_SYSTEM_MPFR=1" ];
     }
@@ -141,6 +147,7 @@ let
     #   flags=["USE_SYSTEM_LIBUV=1"];
     # }
     {
+      use = false;
       buildInputs = [ utf8proc ];
       makeFlags = [ "USE_SYSTEM_UTF8PROC=1" ];
     }
@@ -159,14 +166,17 @@ let
     #   flags=["USE_SYSTEM_CURL=1"];
     # }
     {
+      use = false;
       buildInputs = [ libgit2 ];
       makeFlags = [ "USE_SYSTEM_LIBGIT2=1" ];
     }
     {
+      use = false;
       buildInputs = patchelf;
       makeFlags = [ "USE_SYSTEM_PATCHELF=1" ];
     }
     {
+      use = false;
       buildInputs = zlib;
       makeFlags = [ "USE_SYSTEM_ZLIB=1" ];
     }
@@ -195,8 +205,6 @@ stdenv.mkDerivation rec {
     CoreServices
     ApplicationServices
   ];
-
-  LD_LIBRARY_PATH = deps.LD_LIBRARY_PATH;
 
   nativeBuildInputs = with pkgs; [
     # Required by Julia
@@ -252,6 +260,7 @@ stdenv.mkDerivation rec {
   __noChroot = true;
 
   # TODO
+  LD_LIBRARY_PATH = deps.LD_LIBRARY_PATH;
   preBuild = ''
     sed -e '/^install:/s@[^ ]*/doc/[^ ]*@@' -i Makefile
     sed -e '/[$](DESTDIR)[$](docdir)/d' -i Makefile
