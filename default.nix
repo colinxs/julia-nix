@@ -251,7 +251,7 @@ stdenv.mkDerivation rec {
     rg '\-j\s*[0-9]+' 
     set -e
     echo "DONE"
-    # exit
+    exit
   '';
 
   dontUseCmakeConfigure = true;
