@@ -262,6 +262,11 @@ stdenv.mkDerivation rec {
     ]
     ++ deps.makeFlags;
 
+    configurePhase = ''
+      mkdir ./__build
+      make O=./__build configure
+    '';
+
   # TODO
   __noChroot = true;
 
