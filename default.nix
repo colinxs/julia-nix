@@ -66,7 +66,7 @@ let
     in
       if length y' > 0 then elemAt 0 x' == elemAt 0 y' else true
       && if length y' > 1 then elemAt 1 x' == elemAt 1 y' else true
-      && if length y' > 2 then elemAt 2 x' == elemAt 2 y' else true
+      && if length y' > 2 then elemAt 2 x' == elemAt 2 y' else true;
 
   # TODO
   toPretty = x:
