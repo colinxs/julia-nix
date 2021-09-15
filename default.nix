@@ -198,11 +198,16 @@ stdenv.mkDerivation rec {
     ./patches/1.6/generate_precompile.patch
   ];
 
-  # postPatch = ''
-  #   patchShebangs . contrib
-  # '';
+  postPatch = ''
+    patchShebangs . contrib
+  '';
 
   dontUseCmakeConfigure = true;
+  enableParallelBuilding = true;
+  
+  # TODO
+  __noChroot = true;
+
 
   buildInputs = []
     # ++ deps.buildInputs # TODO
@@ -249,42 +254,34 @@ stdenv.mkDerivation rec {
       }.${arch} or (throw "unsupported architecture: ${arch}");
     in
     [
-      "ARCH=${arch}" # TODO see 'Prevent picking up $ARCH from the environment variable' in Make.inc
+      "ARCH=${arch}"
       "MARCH=${march}"
       "JULIA_CPU_TARGET=${cpuTarget}"
-      # "PREFIX=$(out)"
-      "prefix=$(out)" # TODO prefix vs PREFIX
+      # "PREFIX=$(out)" TODO prefix vs PREFIX
+      "prefix=$(out)" 
       "SHELL=${stdenv.shell}"
      
       # TODO
       "USE_BINARYBUILDER=1"
-      "VERBOSE=1"
+      # "VERBOSE=1"
       "JOBS=$NIX_BUILD_CORES"
       "MAKE_NB_JOBS=$NIX_BUILD_CORES"
     ]
     ++ deps.makeFlags;
 
-    configurePhase = ''
-      #mkdir ./__build
-      #make O=./__build configure
-      make cleanall
-    '';
+  # Needed for Libgit2 tests
+  SSL_CERT_FILE = "${cacert}/etc/ssl/certs/ca-bundle.crt";
 
   # TODO
-  __noChroot = true;
+  LD_LIBRARY_PATH = deps.LD_LIBRARY_PATH;
 
-  # TODO
-  # LD_LIBRARY_PATH = deps.LD_LIBRARY_PATH;
-  # preBuild = ''
-  #   sed -e '/^install:/s@[^ ]*/doc/[^ ]*@@' -i Makefile
-  #   sed -e '/[$](DESTDIR)[$](docdir)/d' -i Makefile
-  #   export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
-  # '';
-
-  enableParallelBuilding = true;
+  preBuild = ''
+    sed -e '/^install:/s@[^ ]*/doc/[^ ]*@@' -i Makefile
+    sed -e '/[$](DESTDIR)[$](docdir)/d' -i Makefile
+  '';
+    # export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
 
   # Julia's tests require read/write access to $HOME
-  # TODO check
   preCheck = ''
     export HOME="$NIX_BUILD_TOP"
   '';
