@@ -231,7 +231,7 @@ stdenv.mkDerivation rec {
     for f in ./deps/srccache/**/*; do
       sed -i 's/--jobs=$(JOBS)//g' $f
     done
-    shopt -s noglobstar
+    shopt -u globstar
   '';
 
   dontUseCmakeConfigure = true;
