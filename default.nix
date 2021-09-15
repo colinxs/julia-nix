@@ -28,6 +28,7 @@
 , libnghttp2
   # linear algebra
 , blas
+, openblas
 , lapack
 , arpack
   # Darwin frameworks
@@ -129,16 +130,26 @@ let
     # {
     #   flags=["USE_SYSTEM_DSFMT=1"];
     # }
+
+    # {
+    #   use = checkVersion blas.version 
+    #   # use = !stdenv.isDarwin;
+    #   buildInputs = [ blas ];
+    #   # buildInputs = [ openblas ];
+    #   makeFlags = [
+    #     "USE_SYSTEM_BLAS=1"
+    #     "USE_BLAS64=${if blas.isILP64 then "1" else "0"}"
+    #   ];
+    # }
     {
-      use = false;
-      # use = !stdenv.isDarwin;
-      buildInputs = [ blas ];
-      # buildInputs = [ openblas ];
+      use = checkVersion openblas.version "0.3";
+      buildInputs = [ openblas ];
       makeFlags = [
         "USE_SYSTEM_BLAS=1"
         "USE_BLAS64=${if blas.isILP64 then "1" else "0"}"
       ];
     }
+
     {
       use = true;
       buildInputs = [ lapack ];
