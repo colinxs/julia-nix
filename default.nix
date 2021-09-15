@@ -230,7 +230,7 @@ stdenv.mkDerivation rec {
   '';
 
   dontUseCmakeConfigure = true;
-  enableParallelBuilding = true;
+  # enableParallelBuilding = true;
   
   # TODO
   __noChroot = true;
@@ -286,13 +286,14 @@ stdenv.mkDerivation rec {
       "JULIA_CPU_TARGET=${cpuTarget}"
       # "PREFIX=$(out)" TODO prefix vs PREFIX
       "prefix=$(out)" 
-      "SHELL=${stdenv.shell}"
+      # "SHELL=${stdenv.shell}" # TODO should already be set in stdenv/generic/setup.sh
      
       # TODO
       "USE_BINARYBUILDER=1"
       # "VERBOSE=1"
       "JOBS=\${NIX_BUILD_CORES}"
       "MAKE_NB_JOBS=\${NIX_BUILD_CORES}"
+      "-j\${NIX_BUILD_CORES}"
     ]
     ++ deps.makeFlags;
 
