@@ -66,7 +66,7 @@
     in
     {
       # packages.x86_64-linux.julia = callPackage ./default.nix args;
-      packages.x86_64-linux.julia = (pkgs.hello.override { inherit stdenv; }).overrideAttrs (oA: {
+      packages.x86_64-linux.julia = (pkgs.hello.override { inherit stdenv; }).overrideAttrs (oA: rec {
         preBuild = ''
           echo "$(command -v gcc)"
           exit 1
