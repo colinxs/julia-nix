@@ -50,7 +50,8 @@
       args = { 
         inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices; 
         # stdenv = pkgs.ccacheStdenv;
-        stdenv = pkgs.ccacheWrapper;
+        # stdenv = pkgs.ccacheWrapper;
+        stdenv = pkgs.overrideCC pkgs.stdenv pkgs.ccacheWrapper;
       }; 
     in {
       packages.x86_64-linux.julia = pkgs.callPackage ./default.nix args;
