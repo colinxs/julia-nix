@@ -325,7 +325,7 @@ stdenv.mkDerivation rec {
 
   preBuild = ''
     makeFlagsArray+=(
-      "JOBS=$NIX_BUILD_CORES"
+      # "JOBS=$NIX_BUILD_CORES"
       # "MAKE_NB_JOBS=$NIX_BUILD_CORES"
     )
     # export MAKEFLAGS="-j $NIX_BUILD_CORES"
