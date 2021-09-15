@@ -8,6 +8,8 @@
       name = "julia-v1.6.2";
       outPath = fetcher fetcherArgs;
       meta = {
+        "tag" = "v1.6.2";
+        "rev" = "1b93d53fc4bb59350ada898038ed4de2994cce33";
         "assets" = {
           "julia-1.6.2-full.tar.gz" =
             let
