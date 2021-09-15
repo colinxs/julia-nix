@@ -12,13 +12,13 @@
   outputs = { self, nixpkgs, nix-home, ... }:
     let
       system = "x86_64-linux";
-      cc = pkgs.gcc9;
-      # cc = pkgs.gcc9.overrideAttrs (oA: {
-      #   cc =  oA.cc.override {
-      #     reproducibleBuild = false;
-      #     profiledCompiler = true; 
-      #   };
-      # });
+      # cc = pkgs.gcc9;
+      cc = pkgs.gcc9.overrideAttrs (oA: {
+        cc =  oA.cc.override {
+          reproducibleBuild = false;
+          profiledCompiler = true; 
+        };
+      });
       stdenv = with pkgs; overrideCC pkgs.stdenv (ccacheWrapper.override { inherit cc; }); 
       pkgs = import nixpkgs {
         inherit system;
