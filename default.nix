@@ -199,13 +199,12 @@ let
   ];
 in
 builtins.trace ''
-  HERE: ${toString (checkVersion "1.2.3" "1")}
-  HERE: ${toString (checkVersion "1.2.3" "1.2")}
-  HERE: ${toString (checkVersion "1.2.3" "1.2.3")}
-
-  HERE: ${toString (checkVersion "1.2.3" "2")}
-  HERE: ${toString (checkVersion "1.2.3" "1.3")}
-  HERE: ${toString (checkVersion "1.2.3" "1.2.4")}
+  HERE: ${toPretty (checkVersion "1.2.3" "1")}
+  HERE: ${toPretty (checkVersion "1.2.3" "1.2")}
+  HERE: ${toPretty (checkVersion "1.2.3" "1.2.3")}
+  HERE: ${toPretty (checkVersion "1.2.3" "2")}
+  HERE: ${toPretty (checkVersion "1.2.3" "1.3")}
+  HERE: ${toPretty (checkVersion "1.2.3" "1.2.4")}
 ''
 (stdenv.mkDerivation rec {
   inherit (julia) pname version;
