@@ -279,7 +279,7 @@ stdenv.mkDerivation rec {
     ++ deps.makeFlags;
 
   # Needed for Libgit2 tests
-  SSL_CERT_FILE = "${cacert}/etc/ssl/certs/ca-bundle.crt";
+  SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
 
   # TODO
   LD_LIBRARY_PATH = deps.LD_LIBRARY_PATH;
