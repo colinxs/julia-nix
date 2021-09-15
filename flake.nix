@@ -71,35 +71,7 @@
         # ];
       };
       callPackage = pkgs.lib.callPackageWith (pkgs // { stdenv = pkgs.ccacheStdenv; });
-      stdenv = pkgs.ccacheStdenv;
-      # cc = pkgs.gcc9;
-      # stdenv = with pkgs; overrideCC pkgs.stdenv (ccacheWrapper.override { 
-      # stdenv = with pkgs; overrideCC pkgs.stdenv (buildPackages.ccacheWrapper.override ({
-      #   inherit cc; 
-      # }));
-      # stdenv = with pkgs; overrideCC ccacheStdenv (wrapNonDeterminsticGcc ccacheStdenv buildPackages.gcc9);
-      # stdenv = (makeOverridable ({ stdenv, ... } @ extraArgs:
-      #   overrideCC stdenv (buildPackages.ccacheWrapper.override ({
-      #     inherit (stdenv) cc;
-      #   } // lib.optionalAttrs (builtins.hasAttr "extraConfig" extraArgs) {
-      #     extraConfig = extraArgs.extraConfig;
-      #   }))) {
-      #     inherit stdenv;
-      #   };
-      # stdenv = with pkgs; overrideCC ccacheStdenv fastStdenv.cc; 
-      # stdenv = with pkgs; overrideCC (ccacheWrapper.override {
-      #   # cc = fastStdenv.cc;
-      #   # cc = (wrapNonDeterministicGcc pkgs.stdenv buildPackages.gcc10);
-      #   cc = buildPackages.gcc10.overrideAttrs (oA: {
-      #     cc = oA.cc.override {
-      #       reproducibleBuild = false;
-      #       profiledCompiler = true; 
-      #     };
-      #   });
-      # });
-      # pkgs = nixpkgs.legacyPackages.x86_64-linux;
       pkgsHome = nix-home.legacyPackages.x86_64-linux;
-      # stdenv = with pkgs; overrideCC gccStdenv (wrapNonDeterministicGcc gccStdenv ccacheWrapper); 
       args = {
         inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices;
         # stdenv = pkgs.ccacheStdenv;
