@@ -228,9 +228,10 @@ stdenv.mkDerivation rec {
   postPatch = ''
     patchShebangs . contrib
     shopt -s globstar
-    for f in ./deps/srccache/**/*; do
+    for f in ./deps/**/*; do
       sed -i 's/--jobs=$(JOBS)//g' $f
     done
+    rg '\--jobs'
     shopt -u globstar
   '';
 
@@ -266,6 +267,9 @@ stdenv.mkDerivation rec {
    
     # Extra
     makeWrapper
+
+    # TODO
+    ripgrep
   ];
 
   # See ./Make.inc for full set of flags
