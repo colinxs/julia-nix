@@ -11,7 +11,9 @@
   # };
   outputs = { self, nixpkgs, nix-home, ... }: 
     let
+      system = "x86_64-linux";
       pkgs = import nixpkgs {
+        inherit system;
         overlays = [
           (final: prev: {
             ccacheWrapper = prev.ccacheWrapper.override {
