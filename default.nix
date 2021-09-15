@@ -42,6 +42,7 @@ with lib;
 # See:
 # https://github.com/JuliaLang/julia/blob/master/doc/build/build.md
 # https://github.com/JuliaLang/julia/blob/master/doc/build/distributing.md
+# https://github.com/JuliaLang/julia/blob/master/doc/build/linux.md
 
 # Patched deps (see ./deps/patches in Julia repo)
 # - gmp
@@ -57,26 +58,86 @@ with lib;
 let
   julia = (pkgs.callPackage ./NixManifest.nix { inherit pkgs; }).julia;
   src = julia.meta.assets."julia-${julia.version}-full.tar.gz";
+
+  {
+
+    (lib.optionalString (!stdenv.isDarwin) "USE_SYSTEM_BLAS=1")
+    "USE_BLAS64=${if blas.isILP64 then "1" else "0"}"
+  
+  makeDep = { dep, flags ? [], ldLibraryPath ? true };
+  [
+    {
+      dep = pcre2.dev;
+      flags = [
+        "USE_SYSTEM_PCRE=1"
+        "PCRE_CONFIG=${pcre2.dev}/bin/pcre2-config"
+        "PCRE_INCL_PATH=${pcre2.dev}/include/pcre2.h"
+      ];
+    };
+    {
+      lib = libunwind;
+      flags = [ "USE_SYSTEM_LIBUNWIND=1" ];
+    }
+    {
+      lib = openlibm;
+      flags = ["USE_SYSTEM_OPENLIBM=1"];
+    }
+    {
+      lib = lapack;
+      flags = [ "USE_SYSTEM_LAPACK=1" ];
+    }
+    {
+      lib = mpfr;
+      flags = ["USE_SYSTEM_MPFR=1"]; 
+    }
+    {
+      lib = utf8proc;
+      flags = ["USE_SYSTEM_UTF8PROC=1"];
+    }
+    {
+      lib =     libgit2;
+      flags = ["USE_SYSTEM_LIBGIT2=1"];
+    }
+    {
+      lib = patchelf;
+      flags = ["USE_SYSTEM_PATCHELF=1"];
+    }
+    {
+      lib = zlib;
+      flags = ["USE_SYSTEM_ZLIB=1"];
+    }
+  ]
+
+
+      
+
+  # USE_SYSTEM_CSL =  
+  # USE_SYSTEM_LLVM = 
+  # DISABLE_LIBUNWIND = 
+  # USE_SYSTEM_LIBM = 
+  # UNTRUSTED_SYSTEM_LIBM = 
+  # USE_SYSTEM_DSFMT = 
+  # USE_SYSTEM_BLAS = 
+  # USE_SYSTEM_GMP = 
+  # USE_SYSTEM_SUITESPARSE = 
+  # USE_SYSTEM_LIBUV = 
+  # USE_SYSTEM_MBEDTLS = 
+  # USE_SYSTEM_LIBSSH2 = 
+  # USE_SYSTEM_NGHTTP2 = 
+  # USE_SYSTEM_CURL = 
+  # USE_SYSTEM_P7ZIP = 
+  
   buildInputs = [
     libnghttp2.lib
     arpack
-    lapack
     fftw
     fftwSinglePrec
-    libgit2
-    libunwind
-    mpfr
-    pcre2.dev
-    openlibm
     openspecfun
     readline
-    utf8proc
-    zlib
     curl
 
     blas
   ] ++ lib.optionals stdenv.isDarwin [ CoreServices ApplicationServices ];
-
 in
 
 stdenv.mkDerivation rec {
