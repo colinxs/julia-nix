@@ -233,7 +233,7 @@ stdenv.mkDerivation rec {
   '';
 
   dontUseCmakeConfigure = true;
-  # enableParallelBuilding = true;
+  enableParallelBuilding = true;
   
   # TODO
   __noChroot = true;
@@ -313,7 +313,7 @@ stdenv.mkDerivation rec {
     #   "MAKE_NB_JOBS=$NIX_BUILD_CORES"
     #   "-j$NIX_BUILD_CORES"
     # )
-    export MAKEFLAGS="-j $NIX_BUILD_CORES"
+    # export MAKEFLAGS="-j $NIX_BUILD_CORES"
 
     sed -e '/^install:/s@[^ ]*/doc/[^ ]*@@' -i Makefile
     sed -e '/[$](DESTDIR)[$](docdir)/d' -i Makefile
