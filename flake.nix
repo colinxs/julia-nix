@@ -72,10 +72,7 @@
       # stdenv = pkgs.stdenv;
 
       # cc = lib.makeOverridable ({stdenv,cc}: pkgs.wrapNonDeterministicGcc stdenv cc) { stdenv=pkgs.stdenv; cc = pkgs.stdenv.cc; }
-      cc = pkgs.gcc10.override (oA: {
-        reproducibleBuild = false;
-        profiledCompiler = true;
-      });
+      cc = pkgs.gcc10.overrideAttrs (oA: { reproducibleBuild = false; profiledCompiler = true; })
 
       stdenv = pkgs.overrideCC pkgs.stdenv (pkgs.ccacheWrapper.override { inherit cc; });
       # stdenv = pkgs.overrideCC pkgs.stdenv cc;
