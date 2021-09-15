@@ -334,7 +334,7 @@ stdenv.mkDerivation rec {
     sed -e '/[$](DESTDIR)[$](docdir)/d' -i Makefile
   '';
     # export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
-
+#
   # Julia's tests require read/write access to $HOME
   preCheck = ''
     export HOME="$NIX_BUILD_TOP"
