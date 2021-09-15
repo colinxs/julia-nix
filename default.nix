@@ -231,9 +231,9 @@ stdenv.mkDerivation rec {
     for f in ./deps/**/Makefile ./deps/**/*.mk; do
       # if [ -f "$f" ]; then
         echo "Modifying $f"
-        sed -i 's/--jobs=$(JOBS)//g' "$f" || echo "===== FAILED: $f"
-        sed -i 's/--jobs\s*=\s*[0-9]*//g' "$f" || echo "===== FAILED: $f"
-        sed -i 's/-j\s*[0-9]*//g' "$f" || echo "===== FAILED: $f"
+        sed -ri 's/--jobs=$(JOBS)//g' "$f" || echo "===== FAILED: $f"
+        sed -ri 's/--jobs\s*=\s*[0-9]+//g' "$f" || echo "===== FAILED: $f"
+        sed -ri 's/-j\s*[0-9]+//g' "$f" || echo "===== FAILED: $f"
       # fi
     done
     shopt -u globstar
