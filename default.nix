@@ -41,23 +41,8 @@ with lib;
 let
   julia = (pkgs.callPackage ./NixManifest.nix { inherit pkgs; }).julia;
   src = julia.meta.assets."julia-${julia.version}-full.tar.gz";
-in
-
-stdenv.mkDerivation rec {
-  inherit (julia) pname version;
-  inherit src;
-
-  patches = [
-    # ./patches/1.5/use-system-utf8proc-julia-1.3.patch
-  ];
-
-  postPatch = ''
-    patchShebangs . contrib
-  '';
-
-  dontUseCmakeConfigure = true;
-
   buildInputs = [
+    libnghttp2.lib
     arpack
     blas
     lapack
@@ -74,6 +59,38 @@ stdenv.mkDerivation rec {
     zlib
     curl
   ] ++ lib.optionals stdenv.isDarwin [ CoreServices ApplicationServices ];
+
+in
+
+stdenv.mkDerivation rec {
+  inherit (julia) pname version;
+  inherit src;
+
+  patches = [
+    # ./patches/1.5/use-system-utf8proc-julia-1.3.patch
+  ];
+
+  postPatch = ''
+    patchShebangs . contrib
+  '';
+
+  dontUseCmakeConfigure = true;
+
+  LD_LIBRARY_PATH = makeLibraryPath buildInputs;
+  # LD_LIBRARY_PATH = makeLibraryPath [
+  #   curl
+  #   arpack
+  #   fftw
+  #   fftwSinglePrec
+  #   libgit2
+  #   mpfr
+  #   blas
+  #   openlibm
+  #   openspecfun
+  #   pcre2
+  #   lapack
+  # ];
+
 
   nativeBuildInputs = [ curl gfortran m4 makeWrapper patchelf perl python2 which cmake ];
 
@@ -124,20 +141,6 @@ stdenv.mkDerivation rec {
 
       "USE_BINARYBUILDER=0"
     ];
-
-  LD_LIBRARY_PATH = makeLibraryPath [
-    curl
-    arpack
-    fftw
-    fftwSinglePrec
-    libgit2
-    mpfr
-    blas
-    openlibm
-    openspecfun
-    pcre2
-    lapack
-  ];
 
   preBuild = ''
     sed -e '/^install:/s@[^ ]*/doc/[^ ]*@@' -i Makefile
