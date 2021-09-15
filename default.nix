@@ -291,11 +291,20 @@ stdenv.mkDerivation rec {
       # TODO
       "USE_BINARYBUILDER=1"
       # "VERBOSE=1"
+      # "JOBS=$NIX_BUILD_CORES"
+      # "MAKE_NB_JOBS=$NIX_BUILD_CORES"
+      # "-j$NIX_BUILD_CORES"
+    ]
+    ++ deps.makeFlags;
+
+    preBuild = ''
+      exit
       "JOBS=$NIX_BUILD_CORES"
       "MAKE_NB_JOBS=$NIX_BUILD_CORES"
       "-j$NIX_BUILD_CORES"
-    ]
-    ++ deps.makeFlags;
+    '';
+
+
 
   # Needed for Libgit2 tests
   SSL_CERT_FILE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
