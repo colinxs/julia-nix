@@ -238,6 +238,7 @@ stdenv.mkDerivation rec {
     done
     shopt -u globstar
     set +e
+    rg JOBS
     rg '\--jobs\s*=' 
     rg '\-j\s*[0-9]+' deps
     set -e
