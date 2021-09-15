@@ -187,7 +187,7 @@ let
     {
       use = checkVersion libnghttp2.version "1";
       buildInputs = [ libnghttp2.lib ];
-      flags=["USE_SYSTEM_NGHTTP2=1"];
+      makeFlags=["USE_SYSTEM_NGHTTP2=1"];
     }
     {
       use = checkVersion curl.version "7";
