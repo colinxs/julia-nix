@@ -228,7 +228,7 @@ stdenv.mkDerivation rec {
   postPatch = ''
     patchShebangs . contrib
     shopt -s globstar
-    for f in ./deps/**/*; do
+    for f in ./deps/**/Makefile ./deps/**/*.mk; do
       # if [ -f "$f" ]; then
         sed -i 's/--jobs=$(JOBS)//g' "$f" || echo "===== FAILED: $f"
       # fi
