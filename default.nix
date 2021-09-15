@@ -51,7 +51,7 @@ stdenv.mkDerivation rec {
   inherit src;
 
   patches = [
-    ./patches/1.5/use-system-utf8proc-julia-1.3.patch
+    # ./patches/1.5/use-system-utf8proc-julia-1.3.patch
   ];
 
   postPatch = ''
