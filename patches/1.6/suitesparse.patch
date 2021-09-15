@@ -1,5 +1,5 @@
---- deps/suitesparse.mk	2021-09-15 02:51:31.052832050 -0600
-+++ deps/suitesparse-patched.mk	2021-09-15 03:09:08.494873084 -0600
+--- ./deps/suitesparse.mk	2021-09-15 02:51:31.052832050 -0600
++++ ./deps/suitesparse-patched.mk	2021-09-15 03:09:08.494873084 -0600
 @@ -40,6 +40,7 @@
  	mkdir -p $(dir $@)
  	$(TAR) -C $(dir $@) --strip-components 1 -zxf $<
