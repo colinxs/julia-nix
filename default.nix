@@ -59,6 +59,15 @@ let
   julia = (pkgs.callPackage ./NixManifest.nix { inherit pkgs; }).julia;
   src = julia.meta.assets."julia-${julia.version}-full.tar.gz";
 
+  checkVersion = x: y:
+    let
+      x' = splitVersion x;
+      y' = splitVersion y;
+    in
+      if length y' > 0 then elemAt 0 x' == elemAt 0 y' else true
+      && if length y' > 1 then elemAt 1 x' == elemAt 1 y' else true
+      && if length y' > 2 then elemAt 2 x' == elemAt 2 y' else true
+
   # TODO
   toPretty = x:
     let f = generators.toPretty {};
@@ -289,19 +298,19 @@ stdenv.mkDerivation rec {
   checkTarget = "test";
 
   # TODO check
-  # postInstall = ''
-  #   # Symlink shared libraries from LD_LIBRARY_PATH into lib/julia,
-  #   # as using a wrapper with LD_LIBRARY_PATH causes segmentation
-  #   # faults when program returns an error:
-  #   #   $ julia -e 'throw(Error())'
-  #   find $(echo $LD_LIBRARY_PATH | sed 's|:| |g') -maxdepth 1 -name '*.${
-  #     if stdenv.isDarwin then "dylib" else "so"
-  #   }*' | while read lib; do
-  #     if [[ ! -e $out/lib/julia/$(basename $lib) ]]; then
-  #       ln -sv $lib $out/lib/julia/$(basename $lib)
-  #     fi
-  #   done
-  # '';
+  postInstall = ''
+    # Symlink shared libraries from LD_LIBRARY_PATH into lib/julia,
+    # as using a wrapper with LD_LIBRARY_PATH causes segmentation
+    # faults when program returns an error:
+    #   $ julia -e 'throw(Error())'
+    find $(echo $LD_LIBRARY_PATH | sed 's|:| |g') -maxdepth 1 -name '*.${
+      if stdenv.isDarwin then "dylib" else "so"
+    }*' | while read lib; do
+      if [[ ! -e $out/lib/julia/$(basename $lib) ]]; then
+        ln -sv $lib $out/lib/julia/$(basename $lib)
+      fi
+    done
+  '';
 
   passthru = {
     inherit majorVersion minorVersion maintenanceVersion;
