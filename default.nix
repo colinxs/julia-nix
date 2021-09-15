@@ -194,6 +194,7 @@ stdenv.mkDerivation rec {
   inherit src;
 
   patches = [
+    ./patches/1.6/0001-reduce-precompile-failure-severity-to-a-warning-3990.patch
   ];
 
   # postPatch = ''
@@ -211,7 +212,7 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = with pkgs; [
     # Required by Julia
-    python2
+    python3
     # python3
     gfortran
     perl
@@ -250,7 +251,7 @@ stdenv.mkDerivation rec {
       "ARCH=${arch}" # TODO see 'Prevent picking up $ARCH from the environment variable' in Make.inc
       "MARCH=${march}"
       "JULIA_CPU_TARGET=${cpuTarget}"
-      "PREFIX=$(out)"
+      # "PREFIX=$(out)"
       "prefix=$(out)" # TODO prefix vs PREFIX
       "SHELL=${stdenv.shell}"
      
