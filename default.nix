@@ -328,7 +328,7 @@ stdenv.mkDerivation rec {
     export SSL_CERT_FILE
     env | grep CCACHE
     ls -la /var/cache/ccache
-    exit
+    # exit
 
     sed -e '/^install:/s@[^ ]*/doc/[^ ]*@@' -i Makefile
     sed -e '/[$](DESTDIR)[$](docdir)/d' -i Makefile
