@@ -20,7 +20,7 @@
         overlays = [
           (final: prev: {
             ccacheWrapper = prev.ccacheWrapper.override {
-              # cc = prev.fastStdenv.cc;
+              cc = prev.fastStdenv.cc;
               # cc = prev.buildPackages.gcc10.overrideAttrs (old: {
               #   cc = old.cc.override {
               #     reproducibleBuild = false;
@@ -51,7 +51,7 @@
             };
           })
         ];
-      };
+      };ixpkgs 
       callPackage = pkgs.lib.callPackageWith (pkgs // { stdenv = pkgs.ccacheStdenv; });
       stdenv = pkgs.ccacheStdenv;
       # pkgs = nixpkgs.legacyPackages.x86_64-linux;
