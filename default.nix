@@ -263,7 +263,7 @@ stdenv.mkDerivation rec {
     ++ deps.makeFlags;
 
     configurePhase = ''
-      mkdir ./__build
+      #mkdir ./__build
       make O=./__build configure
     '';
 
