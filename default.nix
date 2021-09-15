@@ -71,9 +71,10 @@ stdenv.mkDerivation rec {
     readline
     utf8proc
     zlib
+    curl
   ] ++ lib.optionals stdenv.isDarwin [ CoreServices ApplicationServices ];
 
-  nativeBuildInputs = [ curl gfortran m4 makeWrapper patchelf perl python2 which cmake ];
+  nativeBuildInputs = [ gfortran m4 makeWrapper patchelf perl python2 which cmake ];
 
   makeFlags =
     let
