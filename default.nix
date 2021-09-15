@@ -227,7 +227,6 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     patchShebangs . contrib
-
     shopt -s globstar
     for f in ./deps/srccache/**/*; do
       sed -i 's/--jobs=$(JOBS)//g' $f
@@ -276,7 +275,7 @@ stdenv.mkDerivation rec {
       arch = head (splitString "-" stdenv.system);
       march = {
         x86_64 = stdenv.hostPlatform.gcc.arch or "x86-64";
-        cli check if file binaryi686 = "pentium4";
+        i686 = "pentium4";
         aarch64 = "armv8-a";
       }.${arch} or (throw "unsupported architecture: ${arch}");
       # Julia requires Pentium 4 (SSE2) or better
