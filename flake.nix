@@ -14,12 +14,22 @@
       system = "x86_64-linux";
       # cc = pkgs.gcc9;
       cc = pkgs.buildPackages.gcc9.overrideAttrs (oA: {
-        cc =  oA.cc.cc.override {
+        cc =  oA.cc.override {
           reproducibleBuild = false;
           profiledCompiler = true; 
         };
       });
-      stdenv = with pkgs; overrideCC pkgs.stdenv (ccacheWrapper.override { inherit cc; }); 
+      ccacheWrapper = makeOverridable ({ extraConfig, cc }:
+        cc.override {
+          cc = ccache.links {
+            inherit extraConfig;
+            unwrappedCC = cc.cc;
+          };
+        }) {
+          extraConfig = "";
+          inherit (stdenv) cc;
+        };
+      stdenv = pkgs.overrideCC pkgs.stdenv (ccacheWrapper.override { inherit cc; }); 
       pkgs = import nixpkgs {
         inherit system;
         # config = {
