@@ -67,7 +67,10 @@
       # stdenv = pkgs.fastStdenv;
       # stdenv = pkgs.overrideCC pkgs.ccacheStdenv pkgs.fastStdenv.cc;
       # stdenv = pkgs.ccacheStdenv;
-      stdenv = pkgs.overrideCC pkgs.stdenv (pkgs.ccacheWrapper.override { cc = pkgs.fastStdenv.cc.cc; });
+      stdenv = pkgs.overrideCC pkgs.stdenv (pkgs.ccache.links {
+        extraConfig = "";
+        unwrappedCC = pkgs.fastStdenv.cc.cc;
+      });
       args = {
         inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices;
         # stdenv = pkgs.ccacheStdenv;
