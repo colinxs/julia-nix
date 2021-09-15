@@ -4,3 +4,9 @@ owner = "julialang"
 repo = "julia"
 release = "latest"
 assets = ['r"^julia-.*-full\.tar\.gz$"']
+# [julia]
+# type = "github"
+# owner = "julialang"
+# repo = "julia"
+# release = "latest"
+# assets = ['r"^julia-.*-full\.tar\.gz$"']
