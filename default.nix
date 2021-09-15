@@ -64,10 +64,25 @@ let
     (lib.optionalString (!stdenv.isDarwin) "USE_SYSTEM_BLAS=1")
     "USE_BLAS64=${if blas.isILP64 then "1" else "0"}"
   
-  makeDep = { dep, flags ? [], ldLibraryPath ? true };
-  [
+  makeDep = { deps ? {}, flags ? [], ldLibraryPath ? true }:
+    { inherit deps flags ldLibraryPath; };
+
+  deps = [
+    # {
+    #   flags=["USE_SYSTEM_CSL=1"];
+    # }
+    # {
+    #   flags=["USE_SYSTEM_LLVM=1"];
+    # }
     {
-      dep = pcre2.dev;
+      deps = [ libunwind ];
+      flags = [ 
+        "USE_SYSTEM_LIBUNWIND=1"
+        # "DISABLE_LIBUNWIND=0"
+      ];
+    }
+    {
+      deps = [ pcre2.dev ];
       flags = [
         "USE_SYSTEM_PCRE=1"
         "PCRE_CONFIG=${pcre2.dev}/bin/pcre2-config"
@@ -75,54 +90,70 @@ let
       ];
     };
     {
-      lib = libunwind;
-      flags = [ "USE_SYSTEM_LIBUNWIND=1" ];
+      deps = [ openlibm ];
+      flags = [
+        "USE_SYSTEM_OPENLIBM=1"
+        # "USE_SYSTEM_LIBM=0"
+        # "UNTRUSTED_SYSTEM_LIBM=0"
+      ];
+    }
+    # {
+    #   flags=["USE_SYSTEM_DSFMT=1"];
+    # }
+    {
+      deps = [ blas ];
+      # deps = [ openblas ];
+      flags=["USE_SYSTEM_BLAS=1"];
     }
     {
-      lib = openlibm;
-      flags = ["USE_SYSTEM_OPENLIBM=1"];
-    }
-    {
-      lib = lapack;
+      deps = [ lapack ];
       flags = [ "USE_SYSTEM_LAPACK=1" ];
     }
+    # {
+    #   flags=["USE_SYSTEM_GMP=1"];
+    # }
     {
-      lib = mpfr;
+      deps = [ mpfr ];
       flags = ["USE_SYSTEM_MPFR=1"]; 
     }
+    # {
+    #   flags=["USE_SYSTEM_SUITESPARSE=1"];
+    # }
+    # {
+    #   flags=["USE_SYSTEM_LIBUV=1"];
+    # }
     {
-      lib = utf8proc;
+      deps = [ utf8proc ];
       flags = ["USE_SYSTEM_UTF8PROC=1"];
     }
+    # {
+    #   flags=["USE_SYSTEM_MBEDTLS=1"];
+    # }
+    # {
+    #   flags=["USE_SYSTEM_LIBSSH2=1"];
+    # }
+    # {
+    #   deps = [ libnghttp2.lib ];
+    #   flags=["USE_SYSTEM_NGHTTP2=1"];
+    # }
+    # {
+    #   flags=["USE_SYSTEM_CURL=1"];
+    # }
     {
-      lib =     libgit2;
+      deps = [ libgit2 ];
       flags = ["USE_SYSTEM_LIBGIT2=1"];
     }
     {
-      lib = patchelf;
+      deps = patchelf;
       flags = ["USE_SYSTEM_PATCHELF=1"];
     }
     {
-      lib = zlib;
+      deps = zlib;
       flags = ["USE_SYSTEM_ZLIB=1"];
     }
-    {flags=["USE_SYSTEM_CSL=1"];}
-    {flags=["USE_SYSTEM_LLVM=1"];}
-    {flags=["DISABLE_LIBUNWIND=1"];}
-    {flags=[
-      "USE_SYSTEM_LIBM=1"
-      # "UNTRUSTED_SYSTEM_LIBM=1"
-    ];}
-    {flags=["USE_SYSTEM_DSFMT=1"];}
-    {flags=["USE_SYSTEM_BLAS=1"];}
-    {flags=["USE_SYSTEM_GMP=1"];}
-    {flags=["USE_SYSTEM_SUITESPARSE=1"];}
-    {flags=["USE_SYSTEM_LIBUV=1"];}
-    {flags=["USE_SYSTEM_MBEDTLS=1"];}
-    {flags=["USE_SYSTEM_LIBSSH2=1"];}
-    {flags=["USE_SYSTEM_NGHTTP2=1"];}
-    {flags=["USE_SYSTEM_CURL=1"];}
-    {flags=["USE_SYSTEM_P7ZIP=1"];}
+    # {
+    #   flags=["USE_SYSTEM_P7ZIP=1"];
+    # }
   ];
   
   buildInputs = [
