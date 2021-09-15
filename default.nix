@@ -229,17 +229,17 @@ stdenv.mkDerivation rec {
   postPatch = ''
     patchShebangs . contrib
 
-    shopt -s globstar
-    # for f in ./deps/**/Makefile ./deps/**/*.mk; do
-    for f in ./deps/**/*; do 
-      if file --brief --mime-type "$f" | grep -q 'text'; then
-        echo "Modifying $f"
-        sed -ri 's/\s+\--jobs=\$\(JOBS\)//g' "$f" && echo "Modified $f" 
-        sed -ri 's/\s+\--jobs\s*=\s*[0-9]+//g' "$f" && echo "Modified $f"
-        sed -ri 's/\s+\-j\s*[0-9]+//g' "$f" && echo "Modified $f" 
-      fi
-    done
-    shopt -u globstar
+    # shopt -s globstar
+    # # for f in ./deps/**/Makefile ./deps/**/*.mk; do
+    # for f in ./deps/**/*; do 
+    #   if file --brief --mime-type "$f" | grep -q 'text'; then
+    #     echo "Modifying $f"
+    #     sed -ri 's/\s+\--jobs=\$\(JOBS\)//g' "$f" && echo "Modified $f" 
+    #     sed -ri 's/\s+\--jobs\s*=\s*[0-9]+//g' "$f" && echo "Modified $f"
+    #     sed -ri 's/\s+\-j\s*[0-9]+//g' "$f" && echo "Modified $f" 
+    #   fi
+    # done
+    # shopt -u globstar
   '';
 
   dontUseCmakeConfigure = true;
