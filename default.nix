@@ -229,9 +229,9 @@ stdenv.mkDerivation rec {
     patchShebangs . contrib
     shopt -s globstar
     for f in ./deps/**/*; do
-      if [ -f "$f" ]; then
+      # if [ -f "$f" ]; then
         sed -i 's/--jobs=$(JOBS)//g' "$f" || echo "===== FAILED: $f"
-      fi
+      # fi
     done
     shopt -u globstar
     rg '\--jobs'
