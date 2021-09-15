@@ -235,7 +235,8 @@ stdenv.mkDerivation rec {
       # fi
     done
     shopt -u globstar
-    # rg '\--jobs'
+    rg '\--jobs\s*=\s*'
+    rg '\-j\s*'
   '';
 
   dontUseCmakeConfigure = true;
