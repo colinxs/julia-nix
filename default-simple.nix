@@ -143,8 +143,8 @@ stdenv.mkDerivation rec {
   preBuild = ''
     sed -e '/^install:/s@[^ ]*/doc/[^ ]*@@' -i Makefile
     sed -e '/[$](DESTDIR)[$](docdir)/d' -i Makefile
-    #export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
   '';
+  #export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
 
   enableParallelBuilding = true;
 

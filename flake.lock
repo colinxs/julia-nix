@@ -1,0 +1,44 @@
+{
+  "nodes": {
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1631614142,
+        "narHash": "sha256-4B/qkXHPWe/1NL4enq6Qp8eNvTGtvoes1ZpnGbmlRwM=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "071317d543205ee5f5611d391a37582f9b282240",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixpkgs-unstable",
+        "type": "indirect"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixpkgs": "nixpkgs",
+        "src": "src"
+      }
+    },
+    "src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1626277001,
+        "narHash": "sha256-3cLAv2QZch8VxcSPDsqZ3mMcEbkak+kadjMA1maa2OA=",
+        "owner": "julialang",
+        "repo": "julia",
+        "rev": "1b93d53fc4bb59350ada898038ed4de2994cce33",
+        "type": "github"
+      },
+      "original": {
+        "owner": "julialang",
+        "ref": "v1.6.2",
+        "repo": "julia",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
