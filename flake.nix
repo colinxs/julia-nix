@@ -69,6 +69,7 @@
       packages.x86_64-linux.julia = (pkgs.hello.override { inherit stdenv; }).overrideDerivation (oA: rec {
         buildPhase = ''
           echo "$(command -v gcc)"
+
           exit 1
         '';
       });
