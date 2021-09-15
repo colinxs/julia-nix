@@ -5,15 +5,17 @@
     url = "github:edolstra/flake-compat";
     flake = false;
   };
-  inputs.src = {
-    url = "github:julialang/julia/v1.6.2";
-    flake = false;
-  };
-  outputs = { self, nixpkgs, nix-home, src, ... }: 
+  # inputs.src = {
+  #   url = "github:julialang/julia/v1.6.2";
+  #   flake = false;
+  # };
+  outputs = { self, nixpkgs, nix-home, ... }: 
     let
       # pkgs = import nixpkgs { config.allowBroken = true; };
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
       pkgsHome = nix-home.legacyPackages.x86_64-linux; 
+      julia = inherit (pkgs.callPackage ./NixManifest.nix { inherit pkgs; }) julia;
+      src = julia.assets."julia-${julia.version}-full.tar.gz";
       args = { inherit src; inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices; };
     in {
       packages.x86_64-linux.julia = pkgs.callPackage ./default.nix args;
