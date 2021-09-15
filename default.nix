@@ -235,7 +235,7 @@ stdenv.mkDerivation rec {
         sed -ri 's/\s+\--jobs=\$\(JOBS\)//g' "$f" && echo "Modified $f" 
         sed -ri 's/\s+\--jobs\s*=\s*[0-9]+//g' "$f" && echo "Modified $f"
         sed -ri 's/\s+\-j\s*[0-9]+//g' "$f" && echo "Modified $f" 
-      # fi
+      fi
     done
     shopt -u globstar
     set +e
