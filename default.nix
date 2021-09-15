@@ -234,11 +234,16 @@ stdenv.mkDerivation rec {
         sed -i 's/--jobs=$(JOBS)//g' "$f" || echo "===== FAILED: $f"
       # fi
     done
+    echo "HERE"
     shopt -u globstar
+    echo "HERE"
     rg '\--jobs\s*=\s*' -g 'Makefile'
+    echo "HERE"
     rg '\--jobs\s*=\s*' -g '*.mk'
     rg '\-j\s*' -g 'Makefile'
+    echo "HERE"
     rg '\-j\s*' -g '*.mk'
+    echo "HERE"
     echo "done" 
     exit
   '';
