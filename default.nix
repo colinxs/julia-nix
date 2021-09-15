@@ -301,7 +301,7 @@ stdenv.mkDerivation rec {
      
       # TODO
       "USE_BINARYBUILDER=1"
-      # "VERBOSE=1"
+      "VERBOSE=1"
       # "JOBS=$NIX_BUILD_CORES"
       # "MAKE_NB_JOBS=$NIX_BUILD_CORES"
       # "-j$NIX_BUILD_CORES"
@@ -316,13 +316,6 @@ stdenv.mkDerivation rec {
   LD_LIBRARY_PATH = deps.LD_LIBRARY_PATH;
 
   preBuild = ''
-    # makeFlagsArray+=(
-    #   "JOBS=$NIX_BUILD_CORES"
-    #   "MAKE_NB_JOBS=$NIX_BUILD_CORES"
-    #   "-j$NIX_BUILD_CORES"
-    # )
-    # export MAKEFLAGS="-j $NIX_BUILD_CORES"
-
     sed -e '/^install:/s@[^ ]*/doc/[^ ]*@@' -i Makefile
     sed -e '/[$](DESTDIR)[$](docdir)/d' -i Makefile
     #export LD_LIBRARY_PATH
