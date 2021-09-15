@@ -226,11 +226,6 @@ stdenv.mkDerivation rec {
     ./patches/1.6/suitesparse.patch
   ];
 
-  prePatch = ''
-    ls -la deps
-    ls -la contrib
-  '';
-
   postPatch = ''
     exit
     patchShebangs . contrib
