@@ -241,6 +241,7 @@ stdenv.mkDerivation rec {
     rg '\--jobs\s*=' 
     rg '\-j\s*[0-9]+' deps
     set -e
+    echo "DONE"
     exit
   '';
 
