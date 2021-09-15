@@ -321,10 +321,10 @@ builtins.trace ''
     done
   '';
 
-  passthru = {
-    inherit majorVersion minorVersion maintenanceVersion;
-    site = "share/julia/site/v${majorVersion}.${minorVersion}";
-  };
+  # passthru = {
+  #   inherit majorVersion minorVersion maintenanceVersion;
+  #   site = "share/julia/site/v${majorVersion}.${minorVersion}";
+  # };
 
   # TODO
   # meta = {
