@@ -279,6 +279,7 @@ pkgs.ccacheStdenv.mkDerivation rec {
     ripgrep
     file
     cacert
+    openssl
   ];
 
   # See ./Make.inc for full set of flags
