@@ -248,7 +248,6 @@ pkgs.ccacheStdenv.mkDerivation rec {
   # TODO
   __noChroot = true;
 
-
   buildInputs = []
     ++ deps.buildInputs # TODO
     ++ lib.optionals stdenv.isDarwin [
@@ -307,7 +306,7 @@ pkgs.ccacheStdenv.mkDerivation rec {
       # "SHELL=${stdenv.shell}" # TODO should already be set in stdenv/generic/setup.sh
      
       # TODO
-      "USE_BINARYBUILDER=1"
+      "USE_BINARYBUILDER=0"
       # "VERBOSE=1"
       # "JOBS=$NIX_BUILD_CORES"
       # "MAKE_NB_JOBS=$NIX_BUILD_CORES"
