@@ -227,14 +227,14 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     patchShebangs . contrib
-    shopt -s globstar
-    for f in ./deps/**/*; do
-      # if [ -f "$f" ]; then
-        sed -i 's/--jobs=$(JOBS)//g' "$f" || echo "===== FAILED: $f"
-      # fi
-    done
-    shopt -u globstar
-    rg '\--jobs'
+    # shopt -s globstar
+    # for f in ./deps/**/*; do
+    #   # if [ -f "$f" ]; then
+    #     sed -i 's/--jobs=$(JOBS)//g' "$f" || echo "===== FAILED: $f"
+    #   # fi
+    # done
+    # shopt -u globstar
+    # rg '\--jobs'
   '';
 
   dontUseCmakeConfigure = true;
