@@ -22,7 +22,7 @@
             ccacheWrapper = prev.ccacheWrapper.override {
               cc = prev.gcc10Stdenv.cc.override {
                 reproducibleBuild = false;
-                profiledCompiler = with stdenv; (!isDarwin && (isi686 || isx86_64));
+                profiledCompiler = with prev.stdenv; (!isDarwin && (isi686 || isx86_64));
               };
               extraConfig = ''
                 export CCACHE_COMPRESS=1
