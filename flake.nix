@@ -64,7 +64,8 @@
       callPackage = pkgs.lib.callPackageWith (pkgs // { stdenv = pkgs.ccacheStdenv; });
       # stdenv = pkgs.ccacheStdenv;
       stdenv = with pkgs; overrideCC pkgs.stdenv (ccacheWrapper.override {
-        cc = fastStdenv.cc;
+        # cc = fastStdenv.cc;
+        cc = (wrapNonDeterministicGcc pkgs.stdenv buildPackages.gcc10);
       });
       # pkgs = nixpkgs.legacyPackages.x86_64-linux;
       pkgsHome = nix-home.legacyPackages.x86_64-linux;
