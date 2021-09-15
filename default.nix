@@ -283,6 +283,7 @@ stdenv.mkDerivation rec {
 
     # TODO
     ripgrep
+    file
   ];
 
   # See ./Make.inc for full set of flags
