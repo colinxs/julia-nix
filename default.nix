@@ -223,7 +223,7 @@ stdenv.mkDerivation rec {
   patches = [
     # ./patches/1.6/0001-reduce-precompile-failure-severity-to-a-warning-3990.patch
     ./patches/1.6/generate_precompile.patch
-    ./patches/1.6/foo.patch
+    ./patches/1.6/suitsparse.patch
   ];
 
   prePatch = ''
