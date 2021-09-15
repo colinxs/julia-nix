@@ -228,6 +228,7 @@ stdenv.mkDerivation rec {
 
   prePatch = ''
     ls -la deps
+    ls -la contrib
     cat deps/suitesparse.mk
   '';
 
