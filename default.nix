@@ -227,8 +227,8 @@ stdenv.mkDerivation rec {
   ];
 
   postPatch = ''
-    # exit
     patchShebangs . contrib
+
     shopt -s globstar
     # for f in ./deps/**/Makefile ./deps/**/*.mk; do
     for f in ./deps/**/*; do 
@@ -239,15 +239,7 @@ stdenv.mkDerivation rec {
         sed -ri 's/\s+\-j\s*[0-9]+//g' "$f" && echo "Modified $f" 
       fi
     done
-    ls -la deps/srccache | grep Suite
     shopt -u globstar
-    set +e
-    rg JOBS
-    rg '\--jobs\s*=' 
-    rg '\-j\s*[0-9]+' 
-    set -e
-    echo "DONE"
-    # exit
   '';
 
   dontUseCmakeConfigure = true;
