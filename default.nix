@@ -229,7 +229,9 @@ stdenv.mkDerivation rec {
     patchShebangs . contrib
     shopt -s globstar
     for f in ./deps/**/*; do
-      sed -i 's/--jobs=$(JOBS)//g' $f
+      if [ -f "$f" ]; then
+        sed -i 's/--jobs=$(JOBS)//g' $f
+      fi
     done
     rg '\--jobs'
     shopt -u globstar
