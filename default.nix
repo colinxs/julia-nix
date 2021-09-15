@@ -227,6 +227,11 @@ stdenv.mkDerivation rec {
 
   postPatch = ''
     patchShebangs . contrib
+    for f in ./deps/**/*; do
+      echo $f
+      #sed 's/--jobs=$(JOBS)//g'
+    done
+    exit
   '';
 
   dontUseCmakeConfigure = true;
