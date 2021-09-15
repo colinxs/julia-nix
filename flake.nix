@@ -1,15 +1,22 @@
 {
   inputs.nixpkgs.url = "nixpkgs/nixpkgs-unstable";
+  inputs.nix-home.url = "path:///home/colinxs/nix-home";
+  inputs.flake-compat = {
+    url = "github:edolstra/flake-compat";
+    flake = false;
+  };
   inputs.src = {
     url = "github:julialang/julia/v1.6.2";
     flake = false;
   };
-  outputs = { self, nixpkgs, src }: 
+  outputs = { self, nixpkgs, nix-home, src, ... }: 
     let
-      pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      args = { inherit src; inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices; };
+      pkgs = import nixpkgs { config.allowBroken = true; };
+      pkgsHome = nix-home.legacyPackages.x86_64-linux; 
+      args = { inherit src pkgsHome; inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices; };
     in {
-      packages.x86_64-linux.julia = pkgs.callPackage ./default.nix args;
+      # packages.x86_64-linux.julia = pkgs.callPackage ./default.nix args;
       # packages.x86_64-linux.julia = pkgs.callPackage ./default-simple.nix args; 
+      packages.x86_64-linux.chokidar = pkgs.callPackage ./default.nix args;
     };
 }
