@@ -143,14 +143,14 @@ let
     #     "USE_BLAS64=${if blas.isILP64 then "1" else "0"}"
     #   ];
     # }
-    {
-      use = checkVersion openblas.version "0.3";
-      buildInputs = [ openblas ];
-      makeFlags = [
-        "USE_SYSTEM_BLAS=1"
-        "USE_BLAS64=${if openblas.blas64 then "1" else "0"}"
-      ];
-    }
+    # {
+    #   use = checkVersion openblas.version "0.3";
+    #   buildInputs = [ openblas ];
+    #   makeFlags = [
+    #     "USE_SYSTEM_BLAS=1"
+    #     "USE_BLAS64=${if openblas.blas64 then "1" else "0"}"
+    #   ];
+    # }
 
     {
       use = checkVersion lapack.version "3";
@@ -223,7 +223,7 @@ stdenv.mkDerivation rec {
   patches = [
     # ./patches/1.6/0001-reduce-precompile-failure-severity-to-a-warning-3990.patch
     ./patches/1.6/generate_precompile.patch
-    ./patches/1.6/suitesparse.patch
+    # ./patches/1.6/suitesparse.patch
   ];
 
   postPatch = ''
