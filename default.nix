@@ -62,7 +62,7 @@ let
   # TODO
   toPretty = x:
     let f = generators.toPretty {};
-    in if isString x then x else toPretty x;
+    in if isString x then x else f x;
 
   myTrace = x: builtins.trace (toPretty x) x;
 
