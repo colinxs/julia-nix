@@ -253,6 +253,7 @@ stdenv.mkDerivation rec {
      
       # TODO
       "USE_BINARYBUILDER=1"
+      "VERBOSE=1"
     ]
     ++ deps.makeFlags;
 
