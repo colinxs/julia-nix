@@ -241,10 +241,10 @@ stdenv.mkDerivation rec {
     set +e
     rg JOBS
     rg '\--jobs\s*=' 
-    rg '\-j\s*[0-9]+' deps
+    rg '\-j\s*[0-9]+' 
     set -e
     echo "DONE"
-    # exit
+    exit
   '';
 
   dontUseCmakeConfigure = true;
@@ -329,7 +329,7 @@ stdenv.mkDerivation rec {
 
   preBuild = ''
     makeFlagsArray+=(
-      "JOBS=$NIX_BUILD_CORES"
+      # "JOBS=$NIX_BUILD_CORES"
       # "MAKE_NB_JOBS=$NIX_BUILD_CORES"
     )
     # export MAKEFLAGS="-j $NIX_BUILD_CORES"
