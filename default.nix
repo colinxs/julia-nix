@@ -64,9 +64,9 @@ let
       x' = splitVersion x;
       y' = splitVersion y;
     in
-      (if length y' > 0 then elemAt 0 x' == elemAt 0 y' else true)
-      && (if length y' > 1 then elemAt 1 x' == elemAt 1 y' else true)
-      && (if length y' > 2 then elemAt 2 x' == elemAt 2 y' else true);
+         (if length y' > 0 then elemAt x' 0 == elemAt y' 0 else true)
+      && (if length y' > 1 then elemAt x' 1 == elemAt y' 1 else true)
+      && (if length y' > 2 then elemAt x' 2 == elemAt y' 2 else true);
 
   # TODO
   toPretty = x:
