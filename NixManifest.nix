@@ -4,8 +4,8 @@
       fetcher = pkgs.fetchzip;
       pname = "julia";
       fetcherName = "pkgs.fetchzip";
-      version = "v1.6.2";
-      name = "julia-v1.6.2";
+      version = "1.6.2";
+      name = "julia-1.6.2";
       outPath = fetcher fetcherArgs;
       meta = {
         "tag" = "v1.6.2";
