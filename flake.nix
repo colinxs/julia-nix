@@ -64,7 +64,7 @@
       callPackage = pkgs.lib.callPackageWith (pkgs // { stdenv = pkgs.ccacheStdenv; });
       # stdenv = pkgs.ccacheStdenv;
       stdenv = with pkgs; overrideCC pkgs.stdenv (ccacheWrapper.override { 
-        cc = (wrapNonDeterministicGcc pkgs.stdenv buildPackages.gcc9);
+        cc = (wrapNonDeterministicGcc pkgs.stdenv gcc9);
       });
       # stdenv = with pkgs; overrideCC ccacheStdenv (wrapNonDeterminsticGcc ccacheStdenv buildPackages.gcc9);
       # stdenv = (makeOverridable ({ stdenv, ... } @ extraArgs:
