@@ -322,12 +322,6 @@ pkgs.ccacheStdenv.mkDerivation rec {
   LD_LIBRARY_PATH = deps.LD_LIBRARY_PATH;
 
   preBuild = ''
-    makeFlagsArray+=(
-      # "JOBS=$NIX_BUILD_CORES"
-      "MAKE_NB_JOBS=$NIX_BUILD_CORES"
-    )
-    # export MAKEFLAGS="-j $NIX_BUILD_CORES"
-
     export LD_LIBRARY_PATH
     export SSL_CERT_FILE
 
