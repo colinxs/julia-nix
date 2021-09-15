@@ -70,9 +70,13 @@
 
       # stdenv = pkgs.stdenv;
 
+      cc = pkgs.makeOverrideable ({ cc }:
+        (pkgs.wrapNonDeterministicGcc pkgs.gccStdenv cc)
+        { inherit (pkgs.stdenv) cc; }
+      );
+
       stdenv = pkgs.overrideCC pkgs.stdenv (pkgs.ccacheWrapper.override {
         # cc = pkgs.fastStdenv.cc;
-        cc = (pkgs.wrapNonDeterministicGcc pkgs.gccStdenv pkgs.buildPackages.gcc10);
       });
       # stdenv = pkgs.overrideCC pkgs.stdenv (pkgs.ccache.links {
       #   extraConfig = '' 
@@ -101,7 +105,7 @@
           exit 1
         '';
       });
-        
+
       # packages.x86_64-linux.julia = pkgs.callPackage ./default-simple.nix args; 
     };
 }
