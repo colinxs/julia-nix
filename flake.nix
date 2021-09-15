@@ -9,7 +9,7 @@
   #   url = "github:julialang/julia/v1.6.2";
   #   flake = false;
   # };
-  outputs = { self, nixpkgs, nix-home, ... }: 
+  outputs = { self, nixpkgs, nix-home, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -20,6 +20,12 @@
         overlays = [
           (final: prev: {
             ccacheWrapper = prev.ccacheWrapper.override {
+              cc = prev.buildPackages.gcc10.overrideAttrs (old: {
+                cc = old.cc.override {
+                  reproducibleBuild = false;
+                  profiledCompiler = with stdenv; (!isDarwin && (isi686 || isx86_64));
+                };
+              });
               cc = prev.buildPackages.gcc10.override {
                 reproducibleBuild = false;
                 profiledCompiler = with prev.stdenv; (!isDarwin && (isi686 || isx86_64));
@@ -49,20 +55,21 @@
           })
         ];
       };
-      callPackage = pkgs.lib.callPackageWith ( pkgs // { stdenv = pkgs.ccacheStdenv; } );
+      callPackage = pkgs.lib.callPackageWith (pkgs // { stdenv = pkgs.ccacheStdenv; });
       stdenv = pkgs.ccacheStdenv;
       # pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      pkgsHome = nix-home.legacyPackages.x86_64-linux; 
+      pkgsHome = nix-home.legacyPackages.x86_64-linux;
       # stdenv = with pkgs; overrideCC gccStdenv (wrapNonDeterministicGcc gccStdenv ccacheWrapper); 
-      args = { 
-        inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices; 
+      args = {
+        inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices;
         # stdenv = pkgs.ccacheStdenv;
         # stdenv = pkgs.ccacheWrapper;
         # stdenv = pkgs.overrideCC pkgs.stdenv pkgs.ccacheWrapper;
-      }; 
-    in {
+      };
+    in
+    {
       # packages.x86_64-linux.julia = callPackage ./default.nix args;
-      packages.x86_64-linux.julia = pkgs.hello.override { inherit stdenv; }; 
+      packages.x86_64-linux.julia = pkgs.hello.override { inherit stdenv; };
       # packages.x86_64-linux.julia = pkgs.callPackage ./default-simple.nix args; 
     };
 }
