@@ -17,6 +17,7 @@
         overlays = [
           (final: prev: {
             replaceStdenv = { pkgs }: builtins.trace "HERE" pkgs.ccacheStdenv;
+            stdenv = pkgs.ccacheStdenv;
             ccacheWrapper = prev.ccacheWrapper.override {
               extraConfig = ''
                 export CCACHE_COMPRESS=1
