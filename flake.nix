@@ -20,6 +20,10 @@
         overlays = [
           (final: prev: {
             ccacheWrapper = prev.ccacheWrapper.override {
+              cc = prev.gcc10Stdenv.cc.override {
+                reproducibleBuild = false;
+                profiledCompiler = with stdenv; (!isDarwin && (isi686 || isx86_64));
+              };
               extraConfig = ''
                 export CCACHE_COMPRESS=1
                 export CCACHE_DIR=/var/cache/ccache
@@ -49,7 +53,7 @@
 
       # pkgs = nixpkgs.legacyPackages.x86_64-linux;
       pkgsHome = nix-home.legacyPackages.x86_64-linux; 
-      stdenv = with pkgs; overrideCC gccStdenv (wrapNonDeterministicGcc gccStdenv ccacheWrapper); 
+      # stdenv = with pkgs; overrideCC gccStdenv (wrapNonDeterministicGcc gccStdenv ccacheWrapper); 
       args = { 
         inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices; 
         # stdenv = pkgs.ccacheStdenv;
