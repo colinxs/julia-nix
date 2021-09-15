@@ -49,16 +49,16 @@
 
       # pkgs = nixpkgs.legacyPackages.x86_64-linux;
       pkgsHome = nix-home.legacyPackages.x86_64-linux; 
+      stdenv = with pkgs; overrideCC gccStdenv (wrapNonDeterministicGcc gccStdenv ccacheWrapper); 
       args = { 
         inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices; 
         # stdenv = pkgs.ccacheStdenv;
         # stdenv = pkgs.ccacheWrapper;
         # stdenv = pkgs.overrideCC pkgs.stdenv pkgs.ccacheWrapper;
-        stdenv = with pkgs; overrideCC gccStdenv (wrapNonDeterministicGcc gccStdenv ccacheWrapper); 
       }; 
     in {
       # packages.x86_64-linux.julia = callPackage ./default.nix args;
-      packages.x86_64-linux.julia = pkgs.hello.override { stdenv = pkgs.ccacheStdenv; }; 
+      packages.x86_64-linux.julia = pkgs.hello.override { inherit stdenv; }; 
       # packages.x86_64-linux.julia = pkgs.callPackage ./default-simple.nix args; 
     };
 }
