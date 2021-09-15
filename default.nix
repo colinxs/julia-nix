@@ -64,6 +64,8 @@ let
     let f = generators.toPretty {};
     in if isString x then x else toPretty x;
 
+  myTrace = x: builtins.trace (toPretty x) x;
+
   makeDep = { use ? true, buildInputs ? [ ], makeFlags ? [ ], ldLibraryPath ? true }: {
     inherit use buildInputs makeFlags ldLibraryPath;
   };
@@ -262,12 +264,12 @@ stdenv.mkDerivation rec {
   __noChroot = true;
 
   # TODO
-  LD_LIBRARY_PATH = deps.LD_LIBRARY_PATH;
-  preBuild = ''
-    sed -e '/^install:/s@[^ ]*/doc/[^ ]*@@' -i Makefile
-    sed -e '/[$](DESTDIR)[$](docdir)/d' -i Makefile
-    export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
-  '';
+  # LD_LIBRARY_PATH = deps.LD_LIBRARY_PATH;
+  # preBuild = ''
+  #   sed -e '/^install:/s@[^ ]*/doc/[^ ]*@@' -i Makefile
+  #   sed -e '/[$](DESTDIR)[$](docdir)/d' -i Makefile
+  #   export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
+  # '';
 
   enableParallelBuilding = true;
 
@@ -280,19 +282,19 @@ stdenv.mkDerivation rec {
   checkTarget = "test";
 
   # TODO check
-  postInstall = ''
-    # Symlink shared libraries from LD_LIBRARY_PATH into lib/julia,
-    # as using a wrapper with LD_LIBRARY_PATH causes segmentation
-    # faults when program returns an error:
-    #   $ julia -e 'throw(Error())'
-    find $(echo $LD_LIBRARY_PATH | sed 's|:| |g') -maxdepth 1 -name '*.${
-      if stdenv.isDarwin then "dylib" else "so"
-    }*' | while read lib; do
-      if [[ ! -e $out/lib/julia/$(basename $lib) ]]; then
-        ln -sv $lib $out/lib/julia/$(basename $lib)
-      fi
-    done
-  '';
+  # postInstall = ''
+  #   # Symlink shared libraries from LD_LIBRARY_PATH into lib/julia,
+  #   # as using a wrapper with LD_LIBRARY_PATH causes segmentation
+  #   # faults when program returns an error:
+  #   #   $ julia -e 'throw(Error())'
+  #   find $(echo $LD_LIBRARY_PATH | sed 's|:| |g') -maxdepth 1 -name '*.${
+  #     if stdenv.isDarwin then "dylib" else "so"
+  #   }*' | while read lib; do
+  #     if [[ ! -e $out/lib/julia/$(basename $lib) ]]; then
+  #       ln -sv $lib $out/lib/julia/$(basename $lib)
+  #     fi
+  #   done
+  # '';
 
   passthru = {
     inherit majorVersion minorVersion maintenanceVersion;
