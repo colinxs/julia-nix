@@ -20,12 +20,13 @@
         overlays = [
           (final: prev: {
             ccacheWrapper = prev.ccacheWrapper.override {
-              cc = prev.buildPackages.gcc10.overrideAttrs (old: {
-                cc = old.cc.override {
-                  reproducibleBuild = false;
-                  profiledCompiler = with stdenv; (!isDarwin && (isi686 || isx86_64));
-                };
-              });
+              stdenv = prev.fastStdenv;
+              # cc = prev.buildPackages.gcc10.overrideAttrs (old: {
+              #   cc = old.cc.override {
+              #     reproducibleBuild = false;
+              #     profiledCompiler = with stdenv; (!isDarwin && (isi686 || isx86_64));
+              #   };
+              # });
               extraConfig = ''
                 export CCACHE_COMPRESS=1
                 export CCACHE_DIR=/var/cache/ccache
