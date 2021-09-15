@@ -12,14 +12,14 @@
   outputs = { self, nixpkgs, nix-home, ... }:
     let
       system = "x86_64-linux";
-      cc = pkgs.fastStdenv.cc;
+      # cc = pkgs.fastStdenv.cc;
       # cc = pkgs.gcc9;
-      # cc = pkgs.buildPackages.gcc9.overrideAttrs (oA: {
-      #   cc =  oA.cc.override {
-      #     reproducibleBuild = false;
-      #     profiledCompiler = true; 
-      #   };
-      # });
+      cc = pkgs.gcc9.overrideAttrs (oA: {
+        cc =  oA.cc.override {
+          reproducibleBuild = false;
+          profiledCompiler = true; 
+        };
+      });
       # ccacheWrapper = pkgs.makeOverridable ({ extraConfig, cc }:
       #   cc.override {
       #     cc = pkgs.ccache.links {
