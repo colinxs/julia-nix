@@ -232,8 +232,8 @@ stdenv.mkDerivation rec {
       # if [ -f "$f" ]; then
         echo "Modifying $f"
         sed -i 's/--jobs=$(JOBS)//g' "$f" || echo "===== FAILED: $f"
-        sed -i 's/--jobs\s*=\s*[0-9]+//g' "$f" || echo "===== FAILED: $f"
-        sed -i 's/-j\s*[0-9]+//g' "$f" || echo "===== FAILED: $f"
+        sed -i 's/--jobs\s*=\s*[0-9]*//g' "$f" || echo "===== FAILED: $f"
+        sed -i 's/-j\s*[0-9]*//g' "$f" || echo "===== FAILED: $f"
       # fi
     done
     echo "HERE1"
