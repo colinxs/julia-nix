@@ -21,7 +21,7 @@
           (final: prev: {
             ccacheWrapper = prev.ccacheWrapper.override {
               # cc = prev.gcc8;
-              cc = prev.gcc9Stdenv.cc;
+              # cc = prev.gcc9Stdenv.cc;
               # cc = prev.fastStdenv.cc;
               # cc = prev.buildPackages.gcc10.overrideAttrs (oA: {
               #   cc = oA.cc.override {
@@ -62,7 +62,10 @@
         ];
       };
       callPackage = pkgs.lib.callPackageWith (pkgs // { stdenv = pkgs.ccacheStdenv; });
-      stdenv = pkgs.ccacheStdenv;
+      # stdenv = pkgs.ccacheStdenv;
+      stdenv = with pkgs; overrideCC stdenv (ccacheWrapper.override {
+        cc = gcc9;
+      });
       # pkgs = nixpkgs.legacyPackages.x86_64-linux;
       pkgsHome = nix-home.legacyPackages.x86_64-linux;
       # stdenv = with pkgs; overrideCC gccStdenv (wrapNonDeterministicGcc gccStdenv ccacheWrapper); 
