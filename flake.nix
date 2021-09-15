@@ -71,7 +71,7 @@
       # stdenv = pkgs.stdenv;
 
       cc = pkgs.lib.makeOverridable ({ cc }:
-        (pkgs.wrapNonDeterministicGcc pkgs.gccStdenv cc)
+        cc: (pkgs.wrapNonDeterministicGcc pkgs.gccStdenv cc)
         { inherit (pkgs.stdenv) cc; }
       );
 
