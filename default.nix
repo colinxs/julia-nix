@@ -268,7 +268,8 @@ stdenv.mkDerivation rec {
     wget
     m4
     gawk
-    gnupatchopenblas make "-j 1"
+    gnupatch
+    openblas
     cmake
     pkg-config
     which
