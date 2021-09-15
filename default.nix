@@ -63,7 +63,7 @@ let
   toPretty = generators.toPretty {};
 
   makeDep = { use ? true, buildInputs ? [ ], makeFlags ? [ ], ldLibraryPath ? true }: {
-    inherit use deps flags ldLibraryPath;
+    inherit use buildInputs makeFlags ldLibraryPath;
   };
 
   parseDeps = deps:
