@@ -1,6 +1,9 @@
 {
   inputs.nixpkgs.url = "nixpkgs/nixpkgs-unstable";
-  inputs.src.url = "github:julialang/julia/v1.6.2";
+  inputs.src = {
+    url = "github:julialang/julia/v1.6.2";
+    flake = false;
+  };
   outputs = { self, nixpkgs, src }: 
     let
       pkgs = nixpkgs.legacyPackages.x86_64-linux;
