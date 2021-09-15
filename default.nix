@@ -119,11 +119,11 @@ let
       ];
     }
     {
-      use = false;
+      use = true;
       buildInputs = [ openlibm ];
       makeFlags = [
         "USE_SYSTEM_OPENLIBM=1"
-        # "USE_SYSTEM_LIBM=0"
+        "USE_SYSTEM_LIBM=0"
         # "UNTRUSTED_SYSTEM_LIBM=0"
       ];
     }
@@ -141,7 +141,7 @@ let
       ];
     }
     {
-      use = false;
+      use = true;
       buildInputs = [ lapack ];
       makeFlags = [ "USE_SYSTEM_LAPACK=1" ];
     }
@@ -149,7 +149,7 @@ let
     #   flags=["USE_SYSTEM_GMP=1"];
     # }
     {
-      use = false;
+      use = true;
       buildInputs = [ mpfr ];
       makeFlags = [ "USE_SYSTEM_MPFR=1" ];
     }
@@ -160,7 +160,7 @@ let
     #   flags=["USE_SYSTEM_LIBUV=1"];
     # }
     {
-      use = false;
+      use = true;
       buildInputs = [ utf8proc ];
       makeFlags = [ "USE_SYSTEM_UTF8PROC=1" ];
     }
@@ -184,13 +184,13 @@ let
       makeFlags = [ "USE_SYSTEM_LIBGIT2=1" ];
     }
     {
-      use = false;
-      buildInputs = patchelf;
+      use = true;
+      buildInputs = [ patchelf ];
       makeFlags = [ "USE_SYSTEM_PATCHELF=1" ];
     }
     {
-      use = false;
-      buildInputs = zlib;
+      use = true;
+      buildInputs = [ zlib ];
       makeFlags = [ "USE_SYSTEM_ZLIB=1" ];
     }
     # {
@@ -198,15 +198,7 @@ let
     # }
   ];
 in
-builtins.trace ''
-  HERE: ${toPretty (checkVersion "1.2.3" "1")}
-  HERE: ${toPretty (checkVersion "1.2.3" "1.2")}
-  HERE: ${toPretty (checkVersion "1.2.3" "1.2.3")}
-  HERE: ${toPretty (checkVersion "1.2.3" "2")}
-  HERE: ${toPretty (checkVersion "1.2.3" "1.3")}
-  HERE: ${toPretty (checkVersion "1.2.3" "1.2.4")}
-''
-(stdenv.mkDerivation rec {
+stdenv.mkDerivation rec {
   inherit (julia) pname version;
   inherit src;
 
@@ -336,4 +328,4 @@ builtins.trace ''
   #   # https://github.com/NixOS/nixpkgs/pull/121114.
   #   broken = true;
   # };
-})
+}
