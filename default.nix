@@ -236,20 +236,20 @@ stdenv.mkDerivation rec {
         sed -i 's/-j\s*[0-9]*//g' "$f" || echo "===== FAILED: $f"
       # fi
     done
-    echo "HERE1"
-    set +e
     shopt -u globstar
-    echo "HERE2"
-    rg '\--jobs\s*=\s*' -g 'Makefile'
-    echo "HERE3"
-    rg '\--jobs\s*=\s*' -g '*.mk'
-    rg '\-j\s*' -g 'Makefile'
-    echo "HERE4"
-    rg '\-j\s*' -g '*.mk'
-    echo "HERE5"
-    echo "done" 
-    set -e
-    exit
+    # echo "HERE1"
+    # set +e
+    # echo "HERE2"
+    # rg '\--jobs\s*=\s*' -g 'Makefile'
+    # echo "HERE3"
+    # rg '\--jobs\s*=\s*' -g '*.mk'
+    # rg '\-j\s*' -g 'Makefile'
+    # echo "HERE4"
+    # rg '\-j\s*' -g '*.mk'
+    # echo "HERE5"
+    # echo "done" 
+    # set -e
+    # exit
   '';
 
   dontUseCmakeConfigure = true;
