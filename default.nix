@@ -25,6 +25,7 @@
 , openlibm
 , openspecfun
 , pcre2
+, libnghttp2
   # linear algebra
 , blas
 , lapack
