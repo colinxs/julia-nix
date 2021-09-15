@@ -1,6 +1,6 @@
 --- ./contrib/generate_precompile.jl	2021-09-15 00:07:52.708992615 -0600
-+++ ./contrib/generate_precompile-patched.jl	2021-09-15 00:07:20.104671161 -0600
-@@ -322,7 +322,8 @@
++++ ./contrib/generate_precompile-patched.jl	2021-09-15 00:30:52.018139401 -0600
+@@ -322,7 +322,7 @@
      if have_repl
          # Seems like a reasonable number right now, adjust as needed
          # comment out if debugging script
