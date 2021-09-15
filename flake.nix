@@ -80,8 +80,9 @@
       #   };
       # })
       
-      fastCCWrapper = pkgs.gcc10.overrideAttrs (oA: { cc = (oA.cc.override { reproducibleBuild = false; profiledCompiler = true; }); });
-      cc = pkgs.ccache.links { extraConfig = ""; unwrappedCC = fastCCWrapper.cc; };
+      fastCCWrapper = pkgs.gcc10.overrideAttrs (oA: { cc = (oA.cc.override { reproducibleBuild = false; profiledCompiler = true; }); })
+      ccacheCC = pkgs.ccache.links { extraConfig = ""; unwrappedCC = fastCCWrapper.cc; }
+      ccacheCC = pkgs.ccache.links { extraConfig = ""; unwrappedCC = pkgs.gcc10.cc; }
       stdenv = pkgs.overrideCC pkgs.stdenv cc;
 
       # stdenv = pkgs.overrideCC pkgs.stdenv cc;
