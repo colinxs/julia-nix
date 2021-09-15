@@ -106,26 +106,24 @@ let
       lib = zlib;
       flags = ["USE_SYSTEM_ZLIB=1"];
     }
-  ]
-
-
-      
-
-  # USE_SYSTEM_CSL =  
-  # USE_SYSTEM_LLVM = 
-  # DISABLE_LIBUNWIND = 
-  # USE_SYSTEM_LIBM = 
-  # UNTRUSTED_SYSTEM_LIBM = 
-  # USE_SYSTEM_DSFMT = 
-  # USE_SYSTEM_BLAS = 
-  # USE_SYSTEM_GMP = 
-  # USE_SYSTEM_SUITESPARSE = 
-  # USE_SYSTEM_LIBUV = 
-  # USE_SYSTEM_MBEDTLS = 
-  # USE_SYSTEM_LIBSSH2 = 
-  # USE_SYSTEM_NGHTTP2 = 
-  # USE_SYSTEM_CURL = 
-  # USE_SYSTEM_P7ZIP = 
+    {flags=["USE_SYSTEM_CSL=1"];}
+    {flags=["USE_SYSTEM_LLVM=1"];}
+    {flags=["DISABLE_LIBUNWIND=1"];}
+    {flags=[
+      "USE_SYSTEM_LIBM=1"
+      # "UNTRUSTED_SYSTEM_LIBM=1"
+    ];}
+    {flags=["USE_SYSTEM_DSFMT=1"];}
+    {flags=["USE_SYSTEM_BLAS=1"];}
+    {flags=["USE_SYSTEM_GMP=1"];}
+    {flags=["USE_SYSTEM_SUITESPARSE=1"];}
+    {flags=["USE_SYSTEM_LIBUV=1"];}
+    {flags=["USE_SYSTEM_MBEDTLS=1"];}
+    {flags=["USE_SYSTEM_LIBSSH2=1"];}
+    {flags=["USE_SYSTEM_NGHTTP2=1"];}
+    {flags=["USE_SYSTEM_CURL=1"];}
+    {flags=["USE_SYSTEM_P7ZIP=1"];}
+  ];
   
   buildInputs = [
     libnghttp2.lib
