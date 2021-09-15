@@ -51,7 +51,7 @@
             };
           })
         ];
-      };ixpkgs 
+      };
       callPackage = pkgs.lib.callPackageWith (pkgs // { stdenv = pkgs.ccacheStdenv; });
       stdenv = pkgs.ccacheStdenv;
       # pkgs = nixpkgs.legacyPackages.x86_64-linux;
