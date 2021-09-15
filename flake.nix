@@ -66,7 +66,7 @@
     in
     {
       # packages.x86_64-linux.julia = callPackage ./default.nix args;
-      packages.x86_64-linux.julia = pkgs.file.override { inherit stdenv; };
+      packages.x86_64-linux.julia = pkgs.hello.override { inherit stdenv; };
       # packages.x86_64-linux.julia = pkgs.callPackage ./default-simple.nix args; 
     };
 }
