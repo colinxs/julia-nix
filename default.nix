@@ -268,7 +268,7 @@ stdenv.mkDerivation rec {
     wget
     m4
     gawk
-    gnupatch
+    gnupatchopenblas make "-j 1"
     cmake
     pkg-config
     which
@@ -309,8 +309,8 @@ stdenv.mkDerivation rec {
       # TODO
       "USE_BINARYBUILDER=1"
       # "VERBOSE=1"
-      # "JOBS=$NIX_BUILD_CORES"
-      # "MAKE_NB_JOBS=$NIX_BUILD_CORES"
+      "JOBS=$NIX_BUILD_CORES"
+      "MAKE_NB_JOBS=$NIX_BUILD_CORES"
       # "-j$NIX_BUILD_CORES"
     ]
     ++ deps.makeFlags;
