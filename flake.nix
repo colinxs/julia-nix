@@ -77,7 +77,7 @@
           export CCACHE_UMASK=007
         '';
         # unwrappedCC = pkgs.fastStdenv.cc.cc;
-        unWrappedCC = pkgs.stdenv.cc.cc;
+        unwrappedCC = pkgs.stdenv.cc.cc;
       });
 
       # stdenv = pkgs.ccacheStdenv;
