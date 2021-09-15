@@ -59,6 +59,7 @@ let
   julia = (pkgs.callPackage ./NixManifest.nix { inherit pkgs; }).julia;
   src = julia.meta.assets."julia-${julia.version}-full.tar.gz";
 
+  toPretty = generators.toPretty {
   makeDep = { use ? true, deps ? [ ], flags ? [ ], ldLibraryPath ? true }: {
     inherit use deps flags ldLibraryPath;
   };
@@ -71,10 +72,10 @@ let
       makeFlags = flatten (map (dep: dep.flags) deps');
     in
     builtins.trace
-      (generators.toPretty { } {
+      (toPretty {
         # inherit LD_LIBRARY_PATH;
         # inherit makeFlags;
-        buildInputs = map (x: x.name) buildInputs;
+        buildInputs = toPretty (map (x: x.name) buildInputs);
       })
       { inherit buildInputs LD_LIBRARY_PATH makeFlags; };
 
