@@ -328,9 +328,11 @@ pkgs.ccacheStdenv.mkDerivation rec {
     )
     # export MAKEFLAGS="-j $NIX_BUILD_CORES"
 
+    export LD_LIBRARY_PATH
+    export SSL_CERT_FILE
+
     sed -e '/^install:/s@[^ ]*/doc/[^ ]*@@' -i Makefile
     sed -e '/[$](DESTDIR)[$](docdir)/d' -i Makefile
-    #export LD_LIBRARY_PATH
   '';
     # export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
 
