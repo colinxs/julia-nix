@@ -161,7 +161,7 @@ let
     #   flags=["USE_SYSTEM_GMP=1"];
     # }
     {
-      use = checkVersion mpfr "4.1";
+      use = checkVersion mpfr.version "4.1";
       buildInputs = [ mpfr ];
       makeFlags = [ "USE_SYSTEM_MPFR=1" ];
     }
