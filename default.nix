@@ -65,7 +65,7 @@ let
 
   parseDeps = deps:
     let
-      deps' = map makeDep dep;
+      deps' = map makeDep deps;
       buildInputs = flatten (map (dep: dep.deps) deps');
       LD_LIBRARY_PATH = makeLibraryPath (filter (dep: dep.ldLibraryPath) deps');
       makeFlags = flatten (map (dep: dep.flags) deps');
