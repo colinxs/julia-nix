@@ -153,7 +153,7 @@ let
     }
 
     {
-      use = checkVersion lapack "3";
+      use = checkVersion lapack.version "3";
       buildInputs = [ lapack ];
       makeFlags = [ "USE_SYSTEM_LAPACK=1" ];
     }
