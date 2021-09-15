@@ -20,7 +20,7 @@
         overlays = [
           (final: prev: {
             ccacheWrapper = prev.ccacheWrapper.override {
-              cc = prev.gcc10Stdenv.cc.override {
+              cc = prev.buildPackages.gcc10.override {
                 reproducibleBuild = false;
                 profiledCompiler = with prev.stdenv; (!isDarwin && (isi686 || isx86_64));
               };
