@@ -68,7 +68,11 @@
       # stdenv = pkgs.overrideCC pkgs.ccacheStdenv pkgs.fastStdenv.cc;
       # stdenv = pkgs.ccacheStdenv;
       stdenv = pkgs.overrideCC pkgs.stdenv (pkgs.ccache.links {
-        extraConfig = "FUCK";
+        extraConfig = '' 
+          export CCACHE_COMPRESS=1
+          export CCACHE_DIR=/var/cache/ccache
+          export CCACHE_UMASK=007
+        '';
         unwrappedCC = pkgs.fastStdenv.cc.cc;
       });
       args = {
