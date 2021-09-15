@@ -12,7 +12,7 @@
   outputs = { self, nixpkgs, nix-home, src, ... }: 
     let
       # pkgs = import nixpkgs { config.allowBroken = true; };
-      pkgs = pkgs.legacyPackages.x86_64-linux;
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
       pkgsHome = nix-home.legacyPackages.x86_64-linux; 
       args = { inherit src; inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices; };
     in {
