@@ -103,23 +103,23 @@ let
     # {
     #   flags=["USE_SYSTEM_LLVM=1"];
     # }
-    {
-      use = false;
-      buildInputs = [ libunwind ];
-      makeFlags = [
-        "USE_SYSTEM_LIBUNWIND=1"
-        # "DISABLE_LIBUNWIND=0"
-      ];
-    }
-    {
-      use = false;
-      buildInputs = [ pcre2.dev ];
-      makeFlags = [
-        "USE_SYSTEM_PCRE=1"
-        "PCRE_CONFIG=${pcre2.dev}/bin/pcre2-config"
-        "PCRE_INCL_PATH=${pcre2.dev}/include/pcre2.h"
-      ];
-    }
+    # {
+    #   use = false;
+    #   buildInputs = [ libunwind ];
+    #   makeFlags = [
+    #     "USE_SYSTEM_LIBUNWIND=1"
+    #     # "DISABLE_LIBUNWIND=0"
+    #   ];
+    # }
+    # {
+    #   use = false;
+    #   buildInputs = [ pcre2.dev ];
+    #   makeFlags = [
+    #     "USE_SYSTEM_PCRE=1"
+    #     "PCRE_CONFIG=${pcre2.dev}/bin/pcre2-config"
+    #     "PCRE_INCL_PATH=${pcre2.dev}/include/pcre2.h"
+    #   ];
+    # }
     {
       use = checkVersion openlibm.version "0.7"; 
       buildInputs = [ openlibm ];
@@ -291,8 +291,8 @@ stdenv.mkDerivation rec {
       # TODO
       "USE_BINARYBUILDER=1"
       # "VERBOSE=1"
-      "JOBS=$NIX_BUILD_CORES"
-      "MAKE_NB_JOBS=$NIX_BUILD_CORES"
+      "JOBS=\${NIX_BUILD_CORES}"
+      "MAKE_NB_JOBS=\${NIX_BUILD_CORES}"
     ]
     ++ deps.makeFlags;
 
