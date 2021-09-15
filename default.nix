@@ -212,7 +212,7 @@ let
     {
       use = true;
       buildInputs = [ p7zip ];
-      flags=["USE_SYSTEM_P7ZIP=1"];
+      makeFlags=["USE_SYSTEM_P7ZIP=1"];
     }
   ];
 in
