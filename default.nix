@@ -97,6 +97,7 @@ stdenv.mkDerivation rec {
     [
       "ARCH=${arch}"
       "MARCH=${march}"
+
       "JULIA_CPU_TARGET=${cpuTarget}"
       "PREFIX=$(out)"
       "prefix=$(out)"
