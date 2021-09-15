@@ -172,14 +172,14 @@ stdenv.mkDerivation rec {
     site = "share/julia/site/v${majorVersion}.${minorVersion}";
   };
 
-  meta = {
-    description = "High-level performance-oriented dynamical language for technical computing";
-    homepage = "https://julialang.org/";
-    license = lib.licenses.mit;
-    maintainers = with lib.maintainers; [ raskin rob garrison ];
-    platforms = [ "i686-linux" "x86_64-linux" "x86_64-darwin" "aarch64-linux" ];
-    # Unfortunately, this derivation does not pass Julia's test suite. See
-    # https://github.com/NixOS/nixpkgs/pull/121114.
-    broken = true;
-  };
+  # meta = {
+  #   description = "High-level performance-oriented dynamical language for technical computing";
+  #   homepage = "https://julialang.org/";
+  #   license = lib.licenses.mit;
+  #   maintainers = with lib.maintainers; [ raskin rob garrison ];
+  #   platforms = [ "i686-linux" "x86_64-linux" "x86_64-darwin" "aarch64-linux" ];
+  #   # Unfortunately, this derivation does not pass Julia's test suite. See
+  #   # https://github.com/NixOS/nixpkgs/pull/121114.
+  #   broken = true;
+  # };
 }
