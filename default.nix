@@ -39,13 +39,27 @@ assert (!blas.isILP64) && (!lapack.isILP64);
 
 with lib;
 
+# See:
+# https://github.com/JuliaLang/julia/blob/master/doc/build/build.md
+# https://github.com/JuliaLang/julia/blob/master/doc/build/distributing.md
+
+# Patched deps (see ./deps/patches in Julia repo)
+# - gmp
+# - libgit2
+# - libunwind
+# - llvm
+# - mbedtls
+# - openblas
+# - p7zip
+# - pcre2
+# - SuiteSparse
+
 let
   julia = (pkgs.callPackage ./NixManifest.nix { inherit pkgs; }).julia;
   src = julia.meta.assets."julia-${julia.version}-full.tar.gz";
   buildInputs = [
     libnghttp2.lib
     arpack
-    blas
     lapack
     fftw
     fftwSinglePrec
@@ -59,6 +73,8 @@ let
     utf8proc
     zlib
     curl
+
+    blas
   ] ++ lib.optionals stdenv.isDarwin [ CoreServices ApplicationServices ];
 
 in
@@ -93,8 +109,19 @@ stdenv.mkDerivation rec {
   # ];
 
 
-  nativeBuildInputs = [ curl gfortran m4 makeWrapper patchelf perl python2 which cmake ];
+  nativeBuildInputs = [
+    curl
+    gfortran
+    m4
+    makeWrapper
+    patchelf
+    perl
+    python2
+    which
+    cmake
+  ];
 
+  # See ./Make.inc for full set of flags
   makeFlags =
     let
       arch = head (splitString "-" stdenv.system);
