@@ -70,10 +70,8 @@
           profiledCompiler = true; 
         };
       });
-      stdenv = with pkgs; overrideCC pkgs.stdenv (ccacheWrapper.override { 
-        inherit cc;
-        # cc = (wrapNonDeterministicGcc pkgs.stdenv gcc10);
-      });
+      # stdenv = with pkgs; overrideCC pkgs.stdenv (ccacheWrapper.override { 
+      stdenv = with pkgs; overrideCC pkgs.stdenv cc; 
       # stdenv = with pkgs; overrideCC ccacheStdenv (wrapNonDeterminsticGcc ccacheStdenv buildPackages.gcc9);
       # stdenv = (makeOverridable ({ stdenv, ... } @ extraArgs:
       #   overrideCC stdenv (buildPackages.ccacheWrapper.override ({
