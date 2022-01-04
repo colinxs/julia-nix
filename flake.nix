@@ -1,9 +1,7 @@
 {
   inputs = {
-    # nix-home.url = "path:///home/colinxs/nix-home";
     nix-home.url = "git+ssh://git@github.com/colinxs/home?dir=nix-home";
     flake-compat = {
-      inputs.nixpkgs.follows = "nix-home/nixpkgs";
       url = "github:edolstra/flake-compat";
       flake = false;
     };
