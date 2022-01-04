@@ -14,14 +14,13 @@
   outputs = { self, nix-home, flake-compat, flake-utils, ... }:
     let supportedSystems = [ "x86_64-linux" ];
     in
-    flake-utils.lib.eachSystem (system:
+    flake-utils.lib.eachSystem supportedSystems (system:
       let
         inherit (pkgs) mur dev;
         pkgs = nix-home.legacyPackages."${system}";
       in
       {
         packages.julia = pkgs.callPackage ./default.nix {
-          inherit (pkgs.darwin.apple_sdk.frameworks) ApplicationServices CoreServices;
         };
       });
 }
