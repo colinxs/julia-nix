@@ -16,20 +16,18 @@ in
       x' = splitVersion x;
       y' = splitVersion y;
     in
+    assert (builtins.trace x' true);
+    assert (builtins.trace y' true);
     (if length y' > 0 then elemAt x' 0 == elemAt y' 0 else true)
     && (if length y' > 1 then elemAt x' 1 == elemAt y' 1 else true)
     && (if length y' > 2 then elemAt x' 2 == elemAt y' 2 else true);
 
   buildJulia = { src, version, deps ? [ ], ... }@args:
-    assert
-    (builtins.trace ''
-      ${version}
-    '') true;
     let
       finalArgs = foldl (args: overlay: overlay args) { } [
         defaultOverlay
-        argsOverlay
         depsOverlay
+        argsOverlay
       ];
 
       argsOverlay = oA: oA // (removeAttrs args [
@@ -56,6 +54,7 @@ in
 
       defaultOverlay = oA:
         let
+          self = defaultArgs // oA;
           defaultArgs = {
             inherit src version;
             pname = "julia";
@@ -116,10 +115,7 @@ in
 
                   # TODO
                   "USE_BINARYBUILDER=0"
-                  "VERBOSE=1"
-                  # "JOBS=$NIX_BUILD_CORES"
-                  # "MAKE_NB_JOBS=$NIX_BUILD_CORES"
-                  # "-j$NIX_BUILD_CORES"
+                  # "VERBOSE=1"
                 ];
               in
               # assert (lib.traceSeq (map (v: typeOf v) self)) true;
@@ -127,9 +123,13 @@ in
               assert (trace (typeOf march) true);
               assert (trace (typeOf cpuTarget) true);
               assert (trace "GAY" true);
-              assert (traceSeq (builtins.map (v: 
-                (builtins.typeOf v)
-              ) self) true);
+              assert (traceSeq
+                (builtins.map
+                  (v:
+                    (builtins.typeOf v)
+                  )
+                  self)
+                true);
               # assert (trace (map (v: 
               #   assert (builtins.trace "YO" true);
               #   10
@@ -140,6 +140,9 @@ in
             preBuild = ''
               # export LD_LIBRARY_PATH
               # export SSL_CERT_FILE
+              
+              export JOBS=$NIX_BUILD_CORES
+              export MAKE_NB_JOBS=$NIX_BUILD_CORES
 
               # TODO
               sed -e '/^install:/s@[^ ]*/doc/[^ ]*@@' -i Makefile
@@ -188,12 +191,8 @@ in
             # };
           };
         in
-        defaultArgs // oA;
+        self;
     in
-    assert (trace finalArgs.makeFlags) true;
-    # assert (trace ''HERE: ${toString (
-    #     (map (v: typeOf v) finalArgs.makeFlags) 
-    # )}'') true;
-    (stdenv.mkDerivation finalArgs);
-  # traceSeqN 2 (finalArgs) (stdenv.mkDerivation finalArgs);
+    assert (traceSeqN 2 finalArgs true);
+    stdenv.mkDerivation finalArgs;
 }

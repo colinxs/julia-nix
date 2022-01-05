@@ -561,7 +561,11 @@
       "inputs": {
         "flake-compat": "flake-compat",
         "flake-utils": "flake-utils",
-        "nix-home": "nix-home"
+        "nix-home": "nix-home",
+        "nixpkgs": [
+          "nix-home",
+          "nixpkgs"
+        ]
       }
     },
     "rust-analyzer-src": {

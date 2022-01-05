@@ -45,6 +45,6 @@ let
   # - SuiteSparse
 in {
   julia-stable = callPackage ./1.7 { 
-    inherit (julia-utils) buildJulia;
+    inherit (julia-utils) checkVersion buildJulia;
   };
 }
