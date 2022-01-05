@@ -1,6 +1,9 @@
 { lib
 , dev
 , pkgs
+, callPackage
+
+, buildJulia
 
   # build tools
 , makeWrapper
@@ -14,7 +17,7 @@
 
   # standard library dependencies
 , curl
-, libgit2
+# , libgit2
 , mpfr
 , openlibm
 , pcre2
@@ -35,7 +38,7 @@ let
   julia = (callPackage ./NixManifest.nix { }).julia;
   src = julia.meta.assets."julia-${julia.version}-full.tar.gz";
 in
-{
+buildJulia {
   inherit (julia) version;
   inherit src;
   patches = [

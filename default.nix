@@ -3,24 +3,23 @@
 , pkgs
 , callPackage
 , callPackages
-, stdenv
 
 # nativeBuildInputs Required by Julia
-,  python3
-,  gfortran
-,  perl
-,  curl
-,  gawk
-,  gnupatch
-,  cmake
-,  pkg-config
-,  which
-
-,  # TODO temp/debug
-,  ripgrep
-,  file
-,  cacert
-,  openssl
+# ,  python3
+# ,  gfortran
+# ,  perl
+# ,  curl
+# ,  gawk
+# ,  gnupatch
+# ,  cmake
+# ,  pkg-config
+# ,  which
+#
+# # TODO temp/debug
+# ,  ripgrep
+# ,  file
+# ,  cacert
+# ,  openssl
 }:
 
 
@@ -32,11 +31,7 @@ with lib;
 # https://github.com/JuliaLang/julia/blob/master/doc/build/linux.md
 
 let
-  inherit (julia-utils) checkVersion toPretty myTrace makeDep parseDeps;
-  julia-utils = callPackages ./julia-utils { };
-
-  julia = (callPackage ./NixManifest.nix { }).julia;
-  src = julia.meta.assets."julia-${julia.version}-full.tar.gz";
+  julia-utils = callPackages ./julia-utils.nix { };
 
   # Patched deps (see ./deps/patches in Julia repo)
   # - gmp
@@ -48,4 +43,8 @@ let
   # - p7zip
   # - pcre2
   # - SuiteSparse
-in
+in {
+  julia-stable = callPackage ./1.7 { 
+    inherit (julia-utils) buildJulia;
+  };
+}

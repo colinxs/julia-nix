@@ -20,7 +20,7 @@
         pkgs = nix-home.legacyPackages."${system}";
       in
       {
-        packages.julia = pkgs.callPackage ./default.nix {
+        packages = pkgs.callPackages ./default.nix {
         };
       });
 }
